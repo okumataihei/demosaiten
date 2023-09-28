@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>デモ採点</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        button {
+            font-size: 24px;
+            width: 80px;
+            height: 80px;
+        }
+
+        .zero {
+            grid-column: 2; /* 0を真ん中の列に配置 */
+            grid-row: 4; /* 0を一番下の行に配置 */
+        }
+    </style>
+</head>
+<body>
+    <h1>0~9の上には教務員IDの下一桁のボタンを押してください。ボタンを押したら採点が始まります。</h1>
+    <div class="keypad">
+        <button onclick="location.href='quiz1.html'">1</button>
+        <button onclick="location.href='quiz2.html'">2</button>
+        <button onclick="location.href='quiz3.html'">3</button>
+        <button onclick="location.href='quiz4.html'">4</button>
+        <button onclick="location.href='quiz5.html'">5</button>
+        <button onclick="location.href='quiz6.html'">6</button>
+        <button onclick="location.href='quiz7.html'">7</button>
+        <button onclick="location.href='quiz8.html'">8</button>
+        <button onclick="location.href='quiz9.html'">9</button>
+        <button class="zero" onclick="location.href='quiz0.html'">0</button>
+    </div>
+</body>
+</html>
