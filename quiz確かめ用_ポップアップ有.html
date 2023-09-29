@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>デモ採点</title>
+    <style>
+        /* スタイル付けたポップアップ */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* 背景色を黒色に設定 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: yellow;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .popup-text {
+            font-size: 24px;
+            color: black;
+            font-weight: bold;
+        }
+
+        #popup-confirm {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: skyblue;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        input[type="radio"] {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+        }
+
+        #next-button {
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+
+        #image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .image {
+            display: none;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <div id="question-image-container" style="display: flex; align-items: center;">
+            <div id="question-container">
+                <h1>デモ採点_0</h1>
+                <div id="question-list"></div>
+            </div>
+            <div id="image-container" style="margin-left: 20px;">
+              <img class="image" id="image18" src="photo18.jpg" alt="Photo 18" style="max-width: 500px;">
+              <img class="image" id="image6" src="photo6.jpg" alt="Photo 6" style="max-width: 500px;">
+              <img class="image" id="image7" src="photo7.jpg" alt="Photo 7" style="max-width: 500px;">
+              <img class="image" id="image4" src="photo4.jpg" alt="Photo 4" style="max-width: 500px;">
+              <img class="image" id="image10" src="photo10.jpg" alt="Photo 10" style="max-width: 500px;">
+              <img class="image" id="image2" src="photo2.jpg" alt="Photo 2" style="max-width: 500px;">
+              <img class="image" id="image19" src="photo19.jpg" alt="Photo 19" style="max-width: 500px;">
+              <img class="image" id="image20" src="photo20.jpg" alt="Photo 20" style="max-width: 500px;">
+              <img class="image" id="image13" src="photo13.jpg" alt="Photo 13" style="max-width: 500px;">
+              <img class="image" id="image12" src="photo12.jpg" alt="Photo 12" style="max-width: 500px;">
+              <img class="image" id="image8" src="photo8.jpg" alt="Photo 8" style="max-width: 500px;">
+              <img class="image" id="image1" src="photo1.jpg" alt="Photo 1" style="max-width: 500px;">
+              <img class="image" id="image15" src="photo15.jpg" alt="Photo 15" style="max-width: 500px;">
+              <img class="image" id="image3" src="photo3.jpg" alt="Photo 3" style="max-width: 500px;">
+              <img class="image" id="image17" src="photo17.jpg" alt="Photo 17" style="max-width: 500px;">
+              <img class="image" id="image11" src="photo11.jpg" alt="Photo 11" style="max-width: 500px;">
+              <img class="image" id="image5" src="photo5.jpg" alt="Photo 5" style="max-width: 500px;">
+              <img class="image" id="image16" src="photo16.jpg" alt="Photo 16" style="max-width: 500px;">
+              <img class="image" id="image14" src="photo14.jpg" alt="Photo 14" style="max-width: 500px;">
+              <img class="image" id="image9" src="photo9.jpg" alt="Photo 9" style="max-width: 500px;">
+            </div>
+      </div>
+      <button id="next-button">次の5問を表示</button>
+      <button id="download-button" style="display: none;">csvをダウンロード</button>
+      <div id="completion-message" style="display: none;">
+          <p>csvがダウンロードできていることを確認しましたら下記フォームにアクセスしてください。</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSesViQzI7rNbyxgHk2SNbRdTRajp2VsADNLog3E18heogt7ZA/viewform">模範解答画像に関するアンケート</a>
+
+      </div>
+  </div>
+
+<script>
+const groups = [
+  [
+    {"question": "Question 1 from Group 18", "answer": "X"},
+    {"question": "Question 2 from Group 18", "answer": "X"},
+    {"question": "Question 3 from Group 18", "answer": "O"},
+    {"question": "Question 4 from Group 18", "answer": "O"},
+    {"question": "Question 5 from Group 18", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 6", "answer": "X"},
+    {"question": "Question 2 from Group 6", "answer": "X"},
+    {"question": "Question 3 from Group 6", "answer": "O"},
+    {"question": "Question 4 from Group 6", "answer": "X"},
+    {"question": "Question 5 from Group 6", "answer": "O"},
+  ],
+  [
+    {"question": "Question 1 from Group 7", "answer": "O"},
+    {"question": "Question 2 from Group 7", "answer": "O"},
+    {"question": "Question 3 from Group 7", "answer": "X"},
+    {"question": "Question 4 from Group 7", "answer": "X"},
+    {"question": "Question 5 from Group 7", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 4", "answer": "X"},
+    {"question": "Question 2 from Group 4", "answer": "X"},
+    {"question": "Question 3 from Group 4", "answer": "O"},
+    {"question": "Question 4 from Group 4", "answer": "X"},
+    {"question": "Question 5 from Group 4", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 10", "answer": "X"},
+    {"question": "Question 2 from Group 10", "answer": "X"},
+    {"question": "Question 3 from Group 10", "answer": "X"},
+    {"question": "Question 4 from Group 10", "answer": "O"},
+    {"question": "Question 5 from Group 10", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 2", "answer": "X"},
+    {"question": "Question 2 from Group 2", "answer": "O"},
+    {"question": "Question 3 from Group 2", "answer": "X"},
+    {"question": "Question 4 from Group 2", "answer": "X"},
+    {"question": "Question 5 from Group 2", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 19", "answer": "O"},
+    {"question": "Question 2 from Group 19", "answer": "X"},
+    {"question": "Question 3 from Group 19", "answer": "X"},
+    {"question": "Question 4 from Group 19", "answer": "X"},
+    {"question": "Question 5 from Group 19", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 20", "answer": "O"},
+    {"question": "Question 2 from Group 20", "answer": "X"},
+    {"question": "Question 3 from Group 20", "answer": "O"},
+    {"question": "Question 4 from Group 20", "answer": "X"},
+    {"question": "Question 5 from Group 20", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 13", "answer": "1"},
+    {"question": "Question 2 from Group 13", "answer": "X"},
+    {"question": "Question 3 from Group 13", "answer": "O"},
+    {"question": "Question 4 from Group 13", "answer": "1"},
+    {"question": "Question 5 from Group 13", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 12", "answer": "O"},
+    {"question": "Question 2 from Group 12", "answer": "O"},
+    {"question": "Question 3 from Group 12", "answer": "X"},
+    {"question": "Question 4 from Group 12", "answer": "X"},
+    {"question": "Question 5 from Group 12", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 8", "answer": "O"},
+    {"question": "Question 2 from Group 8", "answer": "X"},
+    {"question": "Question 3 from Group 8", "answer": "O"},
+    {"question": "Question 4 from Group 8", "answer": "X"},
+    {"question": "Question 5 from Group 8", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 1", "answer": "X"},
+    {"question": "Question 2 from Group 1", "answer": "X"},
+    {"question": "Question 3 from Group 1", "answer": "X"},
+    {"question": "Question 4 from Group 1", "answer": "X"},
+    {"question": "Question 5 from Group 1", "answer": "O"},
+  ],
+  [
+    {"question": "Question 1 from Group 15", "answer": "1"},
+    {"question": "Question 2 from Group 15", "answer": "1"},
+    {"question": "Question 3 from Group 15", "answer": "X"},
+    {"question": "Question 4 from Group 15", "answer": "O"},
+    {"question": "Question 5 from Group 15", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 3", "answer": "X"},
+    {"question": "Question 2 from Group 3", "answer": "O"},
+    {"question": "Question 3 from Group 3", "answer": "X"},
+    {"question": "Question 4 from Group 3", "answer": "X"},
+    {"question": "Question 5 from Group 3", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 17", "answer": "O"},
+    {"question": "Question 2 from Group 17", "answer": "O"},
+    {"question": "Question 3 from Group 17", "answer": "O"},
+    {"question": "Question 4 from Group 17", "answer": "X"},
+    {"question": "Question 5 from Group 17", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 11", "answer": "X"},
+    {"question": "Question 2 from Group 11", "answer": "X"},
+    {"question": "Question 3 from Group 11", "answer": "O"},
+    {"question": "Question 4 from Group 11", "answer": "X"},
+    {"question": "Question 5 from Group 11", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 5", "answer": "O"},
+    {"question": "Question 2 from Group 5", "answer": "X"},
+    {"question": "Question 3 from Group 5", "answer": "X"},
+    {"question": "Question 4 from Group 5", "answer": "X"},
+    {"question": "Question 5 from Group 5", "answer": "O"},
+  ],
+  [
+    {"question": "Question 1 from Group 16", "answer": "O"},
+    {"question": "Question 2 from Group 16", "answer": "X"},
+    {"question": "Question 3 from Group 16", "answer": "X"},
+    {"question": "Question 4 from Group 16", "answer": "1"},
+    {"question": "Question 5 from Group 16", "answer": "1"},
+  ],
+  [
+    {"question": "Question 1 from Group 14", "answer": "O"},
+    {"question": "Question 2 from Group 14", "answer": "X"},
+    {"question": "Question 3 from Group 14", "answer": "X"},
+    {"question": "Question 4 from Group 14", "answer": "1"},
+    {"question": "Question 5 from Group 14", "answer": "X"},
+  ],
+  [
+    {"question": "Question 1 from Group 9", "answer": "O"},
+    {"question": "Question 2 from Group 9", "answer": "X"},
+    {"question": "Question 3 from Group 9", "answer": "X"},
+    {"question": "Question 4 from Group 9", "answer": "O"},
+    {"question": "Question 5 from Group 9", "answer": "X"},
+  ],
+];
+
+const groupWarnings = {
+  12 : " x, x_0, y_0の添え字ミスは× ",
+  6 : " x, x_0, A_0の添え字ミスは× ",
+  14 : " z, z_0, y_0の添え字ミスは× ",
+  4 : " z, z_0, A_1の添え字ミスは× ",
+  17 : " k=2aを代入していても〇 ",
+  2 : " s=3bを代入していても〇 ",
+  3 : " k=4aを代入していても〇 ",
+  11 : " s=3bを代入していても〇 ",
+  20 : " Δ抜け 及び C_0の添え字ミスは× ",
+  5 : " Δ抜け 及び F_0の添え字ミスは× ",
+  16 : " Δ抜け 及び A_1の添え字ミスは× ",
+  10 : " Δ抜け 及び L_1の添え字ミスは× ",
+  9 : " 絶対値記号抜けは1点 ",
+  19 : " 絶対値記号抜けは1点 ",
+  13 : " 絶対値記号抜けは1点 ",
+  18 : " 絶対値記号抜けは1点 ",
+  15 : " y軸方向は× ",
+  7 : " x軸方向は× ",
+  1 : " x軸方向は× ",
+  8 : " y軸方向は× ",
+}
+
+// 画像ファイル名をグループに割り当てる
+const groupPhotoMapping = {
+  1: "photo1.jpg",
+  2: "photo2.jpg",
+  3: "photo3.jpg",
+  4: "photo4.jpg",
+  5: "photo5.jpg",
+  6: "photo6.jpg",
+  7: "photo7.jpg",
+  8: "photo8.jpg",
+  9: "photo9.jpg",
+  10: "photo10.jpg",
+  11: "photo11.jpg",
+  12: "photo12.jpg",
+  13: "photo13.jpg",
+  14: "photo14.jpg",
+  15: "photo15.jpg",
+  16: "photo16.jpg",
+  17: "photo17.jpg",
+  18: "photo18.jpg",
+  19: "photo19.jpg",
+  20: "photo20.jpg",
+};
+
+let currentGroupIndex = 0;
+let userAnswers = [];
+
+const questionList = document.getElementById("question-list");
+const nextButton = document.getElementById("next-button");
+
+function showImage(groupIndex) {
+    const images = document.querySelectorAll(".image");
+    images.forEach((image, index) => {
+        if (index === groupIndex) {
+            image.style.display = "block";
+        } else {
+            image.style.display = "none";
+        }
+    });
+}
+
+function displayQuestions() {
+    questionList.innerHTML = "";
+    showImage(currentGroupIndex);
+
+    const group = groups[currentGroupIndex];
+
+    if (groupWarnings.hasOwnProperty(currentGroupIndex + 1)) {
+        displayWarningPopup(groupWarnings[currentGroupIndex + 1], () => {
+            displayGroupQuestions(group);
+        });
+    } else {
+        displayGroupQuestions(group);
+    }
+}
+
+function displayWarningPopup(message, callback) {
+    const warningPopup = document.createElement("div");
+    warningPopup.classList.add("popup");
+    warningPopup.innerHTML = `
+        <div class="popup-content">
+            <span class="popup-text">${message}</span>
+            <button id="popup-confirm">確認</button>
+        </div>
+    `;
+    document.body.appendChild(warningPopup);
+
+    const popupConfirmButton = document.getElementById("popup-confirm");
+    popupConfirmButton.addEventListener("click", () => {
+        document.body.removeChild(warningPopup);
+        callback();
+    });
+}
+
+function displayGroupQuestions(group) {
+    for (let i = 0; i < group.length; i++) {
+        const question = group[i];
+        const questionElement = document.createElement("div");
+        questionElement.textContent = question.question;
+
+        const answerInputO = createRadioButton("O", `answer${i}O`);
+        const answerInputX = createRadioButton("X", `answer${i}X`);
+        const answerInput1 = createRadioButton("1", `answer${i}1`);
+
+        const questionContainer = document.createElement("div");
+        questionContainer.appendChild(questionElement);
+        questionContainer.appendChild(answerInputO);
+        questionContainer.appendChild(answerInputX);
+        questionContainer.appendChild(answerInput1);
+
+        questionList.appendChild(questionContainer);
+    }
+}
+
+function createRadioButton(value, name) {
+    const radioContainer = document.createElement("div");
+    radioContainer.style.display = "flex";
+
+    const radioButton = document.createElement("input");
+    radioButton.type = "radio";
+    radioButton.name = name;
+    radioButton.value = value;
+
+    const radioLabel = document.createElement("label");
+    radioLabel.textContent = value;
+    radioLabel.style.marginRight = "10px";
+
+    radioContainer.appendChild(radioButton);
+    radioContainer.appendChild(radioLabel);
+
+    return radioContainer;
+}
+
+nextButton.addEventListener("click", () => {
+    const selectedAnswers = document.querySelectorAll('input[type="radio"]:checked');
+
+    const groupAnswers = Array.from(selectedAnswers).map((radio) => radio.value);
+    userAnswers.push(groupAnswers);
+
+    currentGroupIndex++;
+
+    if (currentGroupIndex >= groups.length) {
+        nextButton.style.display = "none";
+        downloadButton.style.display = "block";
+    } else {
+        displayQuestions();
+    }
+});
+
+const downloadButton = document.getElementById("download-button");
+
+
+function downloadCSV() {
+    // CSV データを作成
+    let csvContent = "data:text/csv;charset=utf-8,";
+    const header = ["Question", "User Answer", "Result"]; // CSV ヘッダー
+
+    // 各グループの回答を CSV に追加
+    for (let i = 0; i < groups.length; i++) {
+        const group = groups[i];
+        const groupAnswers = userAnswers[i];
+        for (let j = 0; j < group.length; j++) {
+            const question = group[j].question;
+            const userAnswer = groupAnswers[j] || "-"; // 空欄の場合は "-" を使用
+            const correctAnswer = group[j].answer;
+            const result = userAnswer === correctAnswer ? "Correct" : "Incorrect";
+            const rowData = [question, userAnswer, result];
+            csvContent += rowData.join(",") + "\n"; // データ行をCSVに追加
+        }
+    }
+
+    // CSV ファイルをダウンロード
+    const encodedURI = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedURI);
+    link.setAttribute("download", "quiz_results.csv");
+    document.body.appendChild(link);
+    link.click();
+}
+
+function displayCompletionMessage() {
+  const completionMessage = document.getElementById("completion-message");
+  completionMessage.style.display = "block";
+}
+
+downloadButton.addEventListener("click", () => {
+    downloadCSV();
+    displayCompletionMessage(); // CSV ダウンロード後に完了メッセージを表示
+});
+
+// 最初の質問を表示
+displayQuestions();
+</script>
+</body>
+</html>
