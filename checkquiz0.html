@@ -23,6 +23,7 @@
             padding: 20px;
             border-radius: 5px;
             text-align: center;
+            flex-direction: row;
         }
 
         .popup-text {
@@ -69,7 +70,7 @@
 /* スマートフォン向けスタイル */
         @media screen and (max-width: 600px) {
             .container {
-                width: 100%;
+                width: 90%;
             }
         }
     </style>
@@ -85,26 +86,26 @@
                 <div id="question-list"></div>
             </div>
             <div id="image-container" style="margin-left: 20px;">
-              <img class="image" id="image7" src="photo7.jpg" alt="Photo 7" style="max-width: 600px;">
-              <img class="image" id="image17" src="photo17.jpg" alt="Photo 17" style="max-width: 600px;">
-              <img class="image" id="image16" src="photo16.jpg" alt="Photo 16" style="max-width: 600px;">
-              <img class="image" id="image15" src="photo15.jpg" alt="Photo 15" style="max-width: 600px;">
-              <img class="image" id="image5" src="photo5.jpg" alt="Photo 5" style="max-width: 600px;">
-              <img class="image" id="image12" src="photo12.jpg" alt="Photo 12" style="max-width: 600px;">
-              <img class="image" id="image19" src="photo19.jpg" alt="Photo 19" style="max-width: 600px;">
-              <img class="image" id="image1" src="photo1.jpg" alt="Photo 1" style="max-width: 600px;">
-              <img class="image" id="image3" src="photo3.jpg" alt="Photo 3" style="max-width: 600px;">
-              <img class="image" id="image13" src="photo13.jpg" alt="Photo 13" style="max-width: 600px;">
-              <img class="image" id="image10" src="photo10.jpg" alt="Photo 10" style="max-width: 600px;">
-              <img class="image" id="image4" src="photo4.jpg" alt="Photo 4" style="max-width: 600px;">
-              <img class="image" id="image6" src="photo6.jpg" alt="Photo 6" style="max-width: 600px;">
-              <img class="image" id="image20" src="photo20.jpg" alt="Photo 20" style="max-width: 600px;">
-              <img class="image" id="image18" src="photo18.jpg" alt="Photo 18" style="max-width: 600px;">
-              <img class="image" id="image9" src="photo9.jpg" alt="Photo 9" style="max-width: 600px;">
-              <img class="image" id="image11" src="photo11.jpg" alt="Photo 11" style="max-width: 600px;">
-              <img class="image" id="image14" src="photo14.jpg" alt="Photo 14" style="max-width: 600px;">
-              <img class="image" id="image2" src="photo2.jpg" alt="Photo 2" style="max-width: 600px;">
-              <img class="image" id="image8" src="photo8.jpg" alt="Photo 8" style="max-width: 600px;">
+              <img class="image" id="image8" src="photo8.jpg" alt="Photo 8" style="max-width: 500px;">
+              <img class="image" id="image3" src="photo3.jpg" alt="Photo 3" style="max-width: 500px;">
+              <img class="image" id="image10" src="photo10.jpg" alt="Photo 10" style="max-width: 500px;">
+              <img class="image" id="image2" src="photo2.jpg" alt="Photo 2" style="max-width: 500px;">
+              <img class="image" id="image17" src="photo17.jpg" alt="Photo 17" style="max-width: 500px;">
+              <img class="image" id="image15" src="photo15.jpg" alt="Photo 15" style="max-width: 500px;">
+              <img class="image" id="image14" src="photo14.jpg" alt="Photo 14" style="max-width: 500px;">
+              <img class="image" id="image13" src="photo13.jpg" alt="Photo 13" style="max-width: 500px;">
+              <img class="image" id="image19" src="photo19.jpg" alt="Photo 19" style="max-width: 500px;">
+              <img class="image" id="image11" src="photo11.jpg" alt="Photo 11" style="max-width: 500px;">
+              <img class="image" id="image6" src="photo6.jpg" alt="Photo 6" style="max-width: 500px;">
+              <img class="image" id="image12" src="photo12.jpg" alt="Photo 12" style="max-width: 500px;">
+              <img class="image" id="image18" src="photo18.jpg" alt="Photo 18" style="max-width: 500px;">
+              <img class="image" id="image7" src="photo7.jpg" alt="Photo 7" style="max-width: 500px;">
+              <img class="image" id="image4" src="photo4.jpg" alt="Photo 4" style="max-width: 500px;">
+              <img class="image" id="image5" src="photo5.jpg" alt="Photo 5" style="max-width: 500px;">
+              <img class="image" id="image1" src="photo1.jpg" alt="Photo 1" style="max-width: 500px;">
+              <img class="image" id="image16" src="photo16.jpg" alt="Photo 16" style="max-width: 500px;">
+              <img class="image" id="image20" src="photo20.jpg" alt="Photo 20" style="max-width: 500px;">
+              <img class="image" id="image9" src="photo9.jpg" alt="Photo 9" style="max-width: 500px;">
             </div>
       </div>
       <button id="next-button">次の5問を表示</button>
@@ -112,170 +113,170 @@
   </div>
 
 <script>
-const groups = [
+const groups =[
   [
-    {"question": "Question 1 from Group 7", "answer": "O"},
-    {"question": "Question 2 from Group 7", "answer": "O"},
-    {"question": "Question 3 from Group 7", "answer": "X"},
-    {"question": "Question 4 from Group 7", "answer": "X"},
-    {"question": "Question 5 from Group 7", "answer": "X"},
+    {"question": "8_1", "answer": "O"},
+    {"question": "8_2", "answer": "X"},
+    {"question": "8_3", "answer": "O"},
+    {"question": "8_4", "answer": "O"},
+    {"question": "8_5", "answer": "X"},
   ],
   [
-    {"question": "Question 1 from Group 17", "answer": "O"},
-    {"question": "Question 2 from Group 17", "answer": "O"},
-    {"question": "Question 3 from Group 17", "answer": "O"},
-    {"question": "Question 4 from Group 17", "answer": "X"},
-    {"question": "Question 5 from Group 17", "answer": "X"},
+    {"question": "3_1", "answer": "O"},
+    {"question": "3_2", "answer": "O"},
+    {"question": "3_3", "answer": "X"},
+    {"question": "3_4", "answer": "X"},
+    {"question": "3_5", "answer": "X"},
   ],
   [
-    {"question": "Question 1 from Group 16", "answer": "O"},
-    {"question": "Question 2 from Group 16", "answer": "X"},
-    {"question": "Question 3 from Group 16", "answer": "X"},
-    {"question": "Question 4 from Group 16", "answer": "1"},
-    {"question": "Question 5 from Group 16", "answer": "1"},
+    {"question": "10_1", "answer": "O"},
+    {"question": "10_2", "answer": "X"},
+    {"question": "10_3", "answer": "O"},
+    {"question": "10_4", "answer": "X"},
+    {"question": "10_5", "answer": "O"},
   ],
   [
-    {"question": "Question 1 from Group 15", "answer": "1"},
-    {"question": "Question 2 from Group 15", "answer": "1"},
-    {"question": "Question 3 from Group 15", "answer": "X"},
-    {"question": "Question 4 from Group 15", "answer": "O"},
-    {"question": "Question 5 from Group 15", "answer": "X"},
+    {"question": "2_1", "answer": "O"},
+    {"question": "2_2", "answer": "O"},
+    {"question": "2_3", "answer": "X"},
+    {"question": "2_4", "answer": "O"},
+    {"question": "2_5", "answer": "X"},
   ],
   [
-    {"question": "Question 1 from Group 5", "answer": "O"},
-    {"question": "Question 2 from Group 5", "answer": "X"},
-    {"question": "Question 3 from Group 5", "answer": "X"},
-    {"question": "Question 4 from Group 5", "answer": "X"},
-    {"question": "Question 5 from Group 5", "answer": "O"},
+    {"question": "17_1", "answer": "O"},
+    {"question": "17_2", "answer": "O"},
+    {"question": "17_3", "answer": "O"},
+    {"question": "17_4", "answer": "1"},
+    {"question": "17_5", "answer": "X"},
   ],
   [
-    {"question": "Question 1 from Group 12", "answer": "O"},
-    {"question": "Question 2 from Group 12", "answer": "O"},
-    {"question": "Question 3 from Group 12", "answer": "X"},
-    {"question": "Question 4 from Group 12", "answer": "X"},
-    {"question": "Question 5 from Group 12", "answer": "X"},
+    {"question": "15_1", "answer": "O"},
+    {"question": "15_2", "answer": "O"},
+    {"question": "15_3", "answer": "X"},
+    {"question": "15_4", "answer": "O"},
+    {"question": "15_5", "answer": "O"},
   ],
   [
-    {"question": "Question 1 from Group 19", "answer": "O"},
-    {"question": "Question 2 from Group 19", "answer": "X"},
-    {"question": "Question 3 from Group 19", "answer": "X"},
-    {"question": "Question 4 from Group 19", "answer": "X"},
-    {"question": "Question 5 from Group 19", "answer": "X"},
+    {"question": "14_1", "answer": "O"},
+    {"question": "14_2", "answer": "O"},
+    {"question": "14_3", "answer": "X"},
+    {"question": "14_4", "answer": "X"},
+    {"question": "14_5", "answer": "O"},
   ],
   [
-    {"question": "Question 1 from Group 1", "answer": "X"},
-    {"question": "Question 2 from Group 1", "answer": "X"},
-    {"question": "Question 3 from Group 1", "answer": "X"},
-    {"question": "Question 4 from Group 1", "answer": "X"},
-    {"question": "Question 5 from Group 1", "answer": "O"},
+    {"question": "13_1", "answer": "O"},
+    {"question": "13_2", "answer": "O"},
+    {"question": "13_3", "answer": "O"},
+    {"question": "13_4", "answer": "1"},
+    {"question": "13_5", "answer": "O"},
   ],
   [
-    {"question": "Question 1 from Group 3", "answer": "X"},
-    {"question": "Question 2 from Group 3", "answer": "O"},
-    {"question": "Question 3 from Group 3", "answer": "X"},
-    {"question": "Question 4 from Group 3", "answer": "X"},
-    {"question": "Question 5 from Group 3", "answer": "X"},
+    {"question": "19_1", "answer": "O"},
+    {"question": "19_2", "answer": "O"},
+    {"question": "19_3", "answer": "O"},
+    {"question": "19_4", "answer": "O"},
+    {"question": "19_5", "answer": "X"},
   ],
   [
-    {"question": "Question 1 from Group 13", "answer": "1"},
-    {"question": "Question 2 from Group 13", "answer": "X"},
-    {"question": "Question 3 from Group 13", "answer": "O"},
-    {"question": "Question 4 from Group 13", "answer": "1"},
-    {"question": "Question 5 from Group 13", "answer": "X"},
+    {"question": "11_1", "answer": "X"},
+    {"question": "11_2", "answer": "X"},
+    {"question": "11_3", "answer": "O"},
+    {"question": "11_4", "answer": "O"},
+    {"question": "11_5", "answer": "O"},
   ],
   [
-    {"question": "Question 1 from Group 10", "answer": "X"},
-    {"question": "Question 2 from Group 10", "answer": "X"},
-    {"question": "Question 3 from Group 10", "answer": "X"},
-    {"question": "Question 4 from Group 10", "answer": "O"},
-    {"question": "Question 5 from Group 10", "answer": "X"},
+    {"question": "6_1", "answer": "O"},
+    {"question": "6_2", "answer": "O"},
+    {"question": "6_3", "answer": "O"},
+    {"question": "6_4", "answer": "X"},
+    {"question": "6_5", "answer": "1"},
   ],
   [
-    {"question": "Question 1 from Group 4", "answer": "X"},
-    {"question": "Question 2 from Group 4", "answer": "X"},
-    {"question": "Question 3 from Group 4", "answer": "O"},
-    {"question": "Question 4 from Group 4", "answer": "X"},
-    {"question": "Question 5 from Group 4", "answer": "X"},
+    {"question": "12_1", "answer": "O"},
+    {"question": "12_2", "answer": "O"},
+    {"question": "12_3", "answer": "O"},
+    {"question": "12_4", "answer": "X"},
+    {"question": "12_5", "answer": "1"},
   ],
   [
-    {"question": "Question 1 from Group 6", "answer": "X"},
-    {"question": "Question 2 from Group 6", "answer": "X"},
-    {"question": "Question 3 from Group 6", "answer": "O"},
-    {"question": "Question 4 from Group 6", "answer": "X"},
-    {"question": "Question 5 from Group 6", "answer": "O"},
+    {"question": "18_1", "answer": "O"},
+    {"question": "18_2", "answer": "O"},
+    {"question": "18_3", "answer": "X"},
+    {"question": "18_4", "answer": "X"},
+    {"question": "18_5", "answer": "O"},
   ],
   [
-    {"question": "Question 1 from Group 20", "answer": "O"},
-    {"question": "Question 2 from Group 20", "answer": "X"},
-    {"question": "Question 3 from Group 20", "answer": "O"},
-    {"question": "Question 4 from Group 20", "answer": "X"},
-    {"question": "Question 5 from Group 20", "answer": "X"},
+    {"question": "7_1", "answer": "X"},
+    {"question": "7_2", "answer": "O"},
+    {"question": "7_3", "answer": "O"},
+    {"question": "7_4", "answer": "O"},
+    {"question": "7_5", "answer": "1"},
   ],
   [
-    {"question": "Question 1 from Group 18", "answer": "X"},
-    {"question": "Question 2 from Group 18", "answer": "X"},
-    {"question": "Question 3 from Group 18", "answer": "O"},
-    {"question": "Question 4 from Group 18", "answer": "O"},
-    {"question": "Question 5 from Group 18", "answer": "X"},
+    {"question": "4_1", "answer": "O"},
+    {"question": "4_2", "answer": "O"},
+    {"question": "4_3", "answer": "X"},
+    {"question": "4_4", "answer": "X"},
+    {"question": "4_5", "answer": "X"},
   ],
   [
-    {"question": "Question 1 from Group 9", "answer": "O"},
-    {"question": "Question 2 from Group 9", "answer": "X"},
-    {"question": "Question 3 from Group 9", "answer": "X"},
-    {"question": "Question 4 from Group 9", "answer": "O"},
-    {"question": "Question 5 from Group 9", "answer": "X"},
+    {"question": "5_1", "answer": "O"},
+    {"question": "5_2", "answer": "X"},
+    {"question": "5_3", "answer": "X"},
+    {"question": "5_4", "answer": "O"},
+    {"question": "5_5", "answer": "O"},
   ],
   [
-    {"question": "Question 1 from Group 11", "answer": "X"},
-    {"question": "Question 2 from Group 11", "answer": "X"},
-    {"question": "Question 3 from Group 11", "answer": "O"},
-    {"question": "Question 4 from Group 11", "answer": "X"},
-    {"question": "Question 5 from Group 11", "answer": "X"},
+    {"question": "1_1", "answer": "O"},
+    {"question": "1_2", "answer": "X"},
+    {"question": "1_3", "answer": "X"},
+    {"question": "1_4", "answer": "X"},
+    {"question": "1_5", "answer": "O"},
   ],
   [
-    {"question": "Question 1 from Group 14", "answer": "O"},
-    {"question": "Question 2 from Group 14", "answer": "X"},
-    {"question": "Question 3 from Group 14", "answer": "X"},
-    {"question": "Question 4 from Group 14", "answer": "1"},
-    {"question": "Question 5 from Group 14", "answer": "X"},
+    {"question": "16_1", "answer": "X"},
+    {"question": "16_2", "answer": "X"},
+    {"question": "16_3", "answer": "O"},
+    {"question": "16_4", "answer": "O"},
+    {"question": "16_5", "answer": "1"},
   ],
   [
-    {"question": "Question 1 from Group 2", "answer": "X"},
-    {"question": "Question 2 from Group 2", "answer": "O"},
-    {"question": "Question 3 from Group 2", "answer": "X"},
-    {"question": "Question 4 from Group 2", "answer": "X"},
-    {"question": "Question 5 from Group 2", "answer": "X"},
+    {"question": "20_1", "answer": "O"},
+    {"question": "20_2", "answer": "1"},
+    {"question": "20_3", "answer": "X"},
+    {"question": "20_4", "answer": "O"},
+    {"question": "20_5", "answer": "O"},
   ],
   [
-    {"question": "Question 1 from Group 8", "answer": "O"},
-    {"question": "Question 2 from Group 8", "answer": "X"},
-    {"question": "Question 3 from Group 8", "answer": "O"},
-    {"question": "Question 4 from Group 8", "answer": "X"},
-    {"question": "Question 5 from Group 8", "answer": "X"},
+    {"question": "9_1", "answer": "O"},
+    {"question": "9_2", "answer": "X"},
+    {"question": "9_3", "answer": "X"},
+    {"question": "9_4", "answer": "O"},
+    {"question": "9_5", "answer": "1"},
   ],
 ];
 
-const groupWarnings = {
-  8 : " x, x_0, y_0の添え字ミスは× ",
-  19 : " x, x_0, A_0の添え字ミスは× ",
-  9 : " z, z_0, y_0の添え字ミスは× ",
-  12 : " z, z_0, A_1の添え字ミスは× ",
-  5 : " k=2aを代入していても〇 ",
-  13 : " s=3bを代入していても〇 ",
-  1 : " k=4aを代入していても〇 ",
-  20 : " s=3bを代入していても〇 ",
-  16 : " Δ抜け 及び C_0の添え字ミスは× ",
-  11 : " Δ抜け 及び F_0の添え字ミスは× ",
-  17 : " Δ抜け 及び A_1の添え字ミスは× ",
-  6 : " Δ抜け 及び L_1の添え字ミスは× ",
-  10 : " 絶対値記号抜けは1点 ",
-  18 : " 絶対値記号抜けは1点 ",
-  4 : " 絶対値記号抜けは1点 ",
-  3 : " 絶対値記号抜けは1点 ",
-  2 : " y軸方向は× ",
-  7 : " x軸方向は× ",
-  15 : " x軸方向は× ",
-  14 : " y軸方向は× ",
+const groupWarnings ={
+  8 : " P_A,V_A,P_Bの添え字ミスは× ",
+  3 : " M_1,V_1,V_0の添え字ミスは× ",
+  10 : " k_1,x_A,l_0の添え字ミスは× ",
+  2 : " C_V,T_1,T_0の添え字ミスは× ",
+  17 : " .(ピリオド)がない場合は× ",
+  15 : " .(ピリオド)がない場合は1点 ",
+  14 : " .(ピリオド)がない場合は1点 ",
+  13 : " .(ピリオド)がない場合は× ",
+  19 : " 「思いのほか」は1点、漢字ミスは× ",
+  11 : " 赤字以外の言葉は×、漢字ミスも× ",
+  6 : " 赤字以外の言葉は×、漢字ミスも× ",
+  12 : " 「リミット」は1点、漢字ミスは× ",
+  18 : " -cosθは1点 ",
+  7 : " ＋,ー のミスは× ",
+  4 : " ＋,ー のミスは× ",
+  5 : " sinθは1点 ",
+  1 : " ひらかなカタカナを使ったら1点 ",
+  16 : " ひらかなカタカナは× ",
+  20 : " ひらかなカタカナは× ",
+  9 : " 「開放戦争」は1点 ",
 }
 
 
