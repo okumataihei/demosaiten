@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>デモ採点</title>
+    <title>デモ採点_1</title>
     <style>
         /* スタイル付けたポップアップ */
         .popup {
@@ -23,7 +23,6 @@
             padding: 20px;
             border-radius: 5px;
             text-align: center;
-            flex-direction: row;
         }
 
         .popup-text {
@@ -62,16 +61,20 @@
             max-width: 100%;
             height: auto;
         }
-        .container {
-            width: 80%;
-            margin: 0 auto;
+
+        #question-container {
+            flex: 0.2; /* 100% 幅を使用 */
         }
 
-/* スマートフォン向けスタイル */
-        @media screen and (max-width: 600px) {
-            .container {
-                width: 110%;
-            }
+        #question-list {
+          display: flex;
+          flex-direction: column; /* 縦に配置 */
+          align-items: flex-start; /* 左寄せ */
+          margin-top: 20px;
+        }
+
+        .question-container {
+            margin-bottom: 10px; /* 質問コンテナの下部に余白を追加 */
         }
     </style>
 </head>
@@ -86,7 +89,7 @@
                 <div id="question-list"></div>
             </div>
             <div id="image-container" style="margin-left: 20px;">
-              <img class="image" id="image8" src="photo8.jpg" alt="Photo 8" style="max-width: 500px;">
+              <img class="image" id="image8" src="photo8.jpg" alt="Photo 8" style="max-width: 400px;">
               <img class="image" id="image3" src="photo3.jpg" alt="Photo 3" style="max-width: 500px;">
               <img class="image" id="image10" src="photo10.jpg" alt="Photo 10" style="max-width: 500px;">
               <img class="image" id="image2" src="photo2.jpg" alt="Photo 2" style="max-width: 500px;">
@@ -113,7 +116,7 @@
   </div>
 
 <script>
-const groups =[
+const groups = [
   [
     {"question": "8_1", "answer": "O"},
     {"question": "8_2", "answer": "X"},
@@ -256,7 +259,8 @@ const groups =[
   ],
 ];
 
-const groupWarnings ={
+const groupWarnings =
+{
   8 : " P_A,V_A,P_Bの添え字ミスは× ",
   3 : " M_1,V_1,V_0の添え字ミスは× ",
   10 : " k_1,x_A,l_0の添え字ミスは× ",
@@ -377,7 +381,9 @@ function displayGroupQuestions(group) {
 
 function createRadioButton(value, name) {
     const radioContainer = document.createElement("div");
-    radioContainer.style.display = "flex";
+    radioContainer.style.display = "inline-flex"; /* 横に配置 */
+    radioContainer.style.flexDirection = "row"; /* 修正 */
+    radioContainer.style.alignItems = "center"; /* ボタンを中央に配置 */
 
     const radioButton = document.createElement("input");
     radioButton.type = "radio";
@@ -386,7 +392,6 @@ function createRadioButton(value, name) {
 
     const radioLabel = document.createElement("label");
     radioLabel.textContent = value;
-    radioLabel.style.marginRight = "10px";
 
     radioContainer.appendChild(radioButton);
     radioContainer.appendChild(radioLabel);
