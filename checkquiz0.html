@@ -43,12 +43,15 @@
         input[type="radio"] {
             width: 30px;
             height: 30px;
-            margin-right: 5px;
+            margin-right: 0px;
+            margin-bottom: 37px;
         }
 
         #next-button {
             font-size: 18px;
-            padding: 10px 20px;
+            padding: 10px 15px;
+            margin-right: 0;
+            margin-left: 0; /* マージンを修正 */
         }
 
         #image-container {
@@ -63,18 +66,35 @@
         }
 
         #question-container {
-            flex: 1; /* 100% 幅を使用 */
+            flex: 0.5;
         }
 
         #question-list {
-          display: flex;
-          flex-direction: column; /* 縦に配置 */
-          align-items: flex-start; /* 左寄せ */
-          margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* スマホ用に変更 */
+            margin-top: 20px; /* マージンを修正 */
         }
 
         .question-container {
-            margin-bottom: 10px; /* 質問コンテナの下部に余白を追加 */
+            margin-bottom: 20px; /* マージンを修正 */
+        }
+
+        #download-button {
+            display: block;
+            padding: 10px 15px;
+            font-size: 20px;
+            margin: 20px auto; /* スマホ用に中央寄せ */
+            background-color: blue;
+            color: white;
+        }
+
+        #count-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: black;
+            font-size: 18px;
         }
     </style>
 </head>
