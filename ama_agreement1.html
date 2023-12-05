@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>デモ採点</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .container {
+    text-align: left; /* パラグラフを左揃えに設定 */
+    margin-top: 0px; /* 少し上に配置 */
+  }
+  .button {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 0 auto; /* ボタンを中央に配置 */
+    display: block; /* ボタンをブロック要素に変更 */
+  }
+  .highlight-text {
+    font-weight: bold; /* テキストを太字に設定 */
+    color: red; /* テキストの色を赤に設定 */
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 style="text-align: center;">デジタル採点システムのインタフェース改善の事例研究</h1>
+  <p>この度は実験にご協力くださり、誠にありがとうございます。</p>
+  <p>以下の内容をご一読いただき、ご確認いただけましたら確認ボタンを押して次に進んでください。</p>
+  <p>・<span class="highlight-text">採点を行うにあたって、事前知識や計算力は必要ありませんのでご安心ください。</span></p>
+  <p>・全部で100答案の採点を行っていただきます。</p>
+  <p>・戻るボタンは作成しておりませんので、採点ミスに気づいても前の画面に戻ることはできません。</p>
+  <p>・全ての答案を採点した後、採点結果のcsvをダウンロードしていただきます。</p>
+  <p>・その後Googleformのアンケートにご回答いただき、csvをアップロードしていただきましたら本実験は終了となります。</p>
+  <button class="button" onclick="redirectToQuiz()">確認</button>
+</div>
+
+<script>
+  function redirectToQuiz() {
+    window.location.href = "ama_agreement2.html";
+  }
+</script>
+</body>
+</html>
