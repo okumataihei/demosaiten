@@ -14,6 +14,7 @@
         .question-container {
             flex: 1;
             max-width: 350px; /* 左のコンテナの横幅を調整 */
+            font-size: 18px; /* フォントサイズを調整 */
         }
 
         /* 写真のスタイル */
@@ -37,6 +38,14 @@
             font-size: 18px;
         }
 
+        /* ボタンのスタイル */
+        button {
+            font-size: 20px; /* フォントサイズを大きく */
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
         /* スマートフォン用のスタイル */
         @media only screen and (max-width: 600px) {
             .container {
@@ -44,8 +53,8 @@
                 margin-left: 2px;
                 margin-right: 2px;
             }
-            .button {
-                font-size: 16px;
+            button {
+                font-size: 18px; /* フォントサイズを調整 */
             }
         }
     </style>
@@ -58,8 +67,8 @@
         <!-- 質問のコンテナ -->
         <div class="question-container">
             <div>
-                <p font-size: 18px;>右側の写真の一番上が模範解答、その下の5つが生徒の答案です。生徒の答案は上から順に採点してください。</p>
-                <p font-size: 18px;>O, X, 1はそれぞれ正解、不正解、1点を表しています。</p>
+                <p>右側の写真の一番上が模範解答、その下の5つが生徒の答案です。生徒の答案は上から順に採点してください。</p>
+                <p>O, X, 1はそれぞれ正解、不正解、1点を表しています。</p>
             </div>
 
             <!-- 質問 No.1 -->
@@ -135,5 +144,4 @@
             window.location.href = "ama_agreement3.html";
         }
     </script>
-</body>
-</html>
+</body
