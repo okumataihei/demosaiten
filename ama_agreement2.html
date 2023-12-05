@@ -3,90 +3,105 @@
 <head>
     <title>デモ採点</title>
     <style>
-        /* 大きなコンテナのスタイル */
-        .container {
+    /* 大きなコンテナのスタイル */
+    .container {
+        font-size: 18px;
+    }
+
+    /* クイズと回答を分けるコンテナ */
+    .quiz-answer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* クイズコンテナ */
+    .quiz-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
+    /* 質問コンテナ */
+    .question-container {
+        flex: 1;
+        max-width: 350px;
+    }
+
+    /* 写真コンテナ */
+    .photo-container {
+        flex: 1;
+        text-align: center;
+    }
+
+    .question-image {
+        width: 100%;
+    }
+
+    input[type="radio"] {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
+
+    .result-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .result-content-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      margin-left: 2px;
+      margin-right: 2px;
+    }
+
+    /* 説明コンテナ */
+    .explanation-container {
+        flex: 1;
+        max-width: 350px;
+    }
+
+    /* 回答写真コンテナ */
+    .answerphoto-container {
+        flex: 1;
+        text-align: center;
+    }
+
+    .answer-image{
+      width: 100%;
+    }
+
+    /* ボタンのスタイル */
+    button {
+        align-items: center;
+        font-size: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* スマートフォン用のスタイル */
+    @media only screen and (max-width: 600px) {
+        button {
             font-size: 18px;
         }
+    }
 
-        /* クイズと回答を分けるコンテナ */
-        .quiz-answer-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* クイズコンテナ */
-        .quiz-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px; /* スマートフォン用のマージン調整 */
-            margin-left: 2px; /* スマートフォン用のマージン調整 */
-            margin-right: 2px; /* スマートフォン用のマージン調整 */
-        }
-
-        /* 質問コンテナ */
-        .question-container {
-            flex: 1;
-            max-width: 350px;
-        }
-
-        /* 写真コンテナ */
-        .photo-container {
-            flex: 1;
-            text-align: center;
-        }
-
-        .question-image {
-            width: 100%;
-        }
-
-        input[type="radio"] {
-            width: 30px;
-            height: 30px;
-            margin-right: 5px;
-        }
-
-        /* 回答コンテナ */
-        .answer-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px; /* スマートフォン用のマージン調整 */
-            margin-left: 2px; /* スマートフォン用のマージン調整 */
-            margin-right: 2px; /* スマートフォン用のマージン調整 */
-        }
-
-        /* 説明コンテナ */
-        .explanation-container {
-            flex: 1;
-            max-width: 350px;
-        }
-
-        /* 回答写真コンテナ */
-        .answerphoto-container {
-            flex: 1;
-            text-align: center;
-        }
-
-        .answer-image {
-            width: 100%;
-        }
-
-        /* ボタンのスタイル */
-        button {
-            font-size: 20px;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        /* スマートフォン用のスタイル */
-        @media only screen and (max-width: 600px) {
-            button {
-                font-size: 18px;
-            }
-        }
+    /* 正解の写真（初めは非表示） */
+    #correctImage {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+      }
     </style>
 </head>
 <body>
@@ -152,32 +167,28 @@
                 </div>
             </div>
 
-            <!-- 回答コンテナ -->
-            <div class="answer-container">
-                <!-- 説明コンテナ -->
-                <div class="explanation-container">
-                    <p>回答の説明がここに入ります。</p>
-                </div>
-
-                <!-- 回答写真コンテナ -->
-                <div class="answerphoto-container">
-                    <!-- 回答の写真 -->
-                    <img src="回答の写真.jpg" alt="回答の写真" class="answer-image">
-                </div>
-            </div>
+            <!-- 確認ボタン -->
+            <button onclick="showCorrectImage()">確認</button>
         </div>
-
-        <!-- 確認ボタン -->
-        <button onclick="showCorrectImage()">確認</button>
 
         <!-- 正解の写真（初めは非表示） -->
         <div id="correctImage" style="display: none;">
-            <!-- 正解の写真 -->
-            <img src="正解の写真.jpg" alt="正解の写真" class="question-image">
-            <br>
-            <p>実際の採点では、このような正しい採点結果の写真は表示されず、次の問題が表示される仕組みになっています。</p>
-            <p>最後の問題を解き終わったら、「csvをダウンロード」のボタンを押していただきます。操作の確認ができましたら下のボタンを押してください。</p>
+          <div class="result-container">
+            <div class="result-content-container">
+              <!-- 説明コンテナ -->
+              <div class="explanation-container">
+                  <p>実際の採点では、このような正しい採点結果の写真は表示されず、次の問題が表示される仕組みになっています。</p>
+                  <p>最後の問題を解き終わったら、「csvをダウンロード」のボタンを押していただきます。操作の確認ができましたら下のボタンを押してください。</p>
+              </div>
+              <!-- 回答写真コンテナ -->
+              <div class="answerphoto-container">
+                  <!-- 回答の写真 -->
+                  <img src="正解の写真.jpg" alt="正解の写真" class="question-image">
+              </div>
+            </div>
+            <!-- 操作の確認ができたボタン -->
             <button onclick="navigateToAgreement3()">操作の確認ができた</button>
+          </div>
         </div>
     </div>
 
