@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>デモ採点</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>デモ採点</title>
+            <style>
+                body {
+                    text-align: center;
+                }
+
+                h1 {
+                    font-size: 20px;
+                    margin-bottom: 20px;
+                }
+
+                .keypad {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  margin: 0;
+                }
+
+                button {
+                    font-size: 24px;
+                    width: 200px;
+                    height: 80px;
+                }
+
+                .zero {
+                    grid-column: 2; /* 0を真ん中の列に配置 */
+                    grid-row: 4; /* 0を一番下の行に配置 */
+                }
+
+                .highlight-text {
+                  font-size: 24px;
+                  font-weight: bold; /* テキストを太字に設定 */
+                  color: red; /* テキストの色を赤に設定 */
+                }
+
+                .blue-text {
+                  color: blue;
+                  font-weight: bold;
+                }
+
+                .white-text {
+                  color: white;
+                  font-weight: bold;
+                }
+
+                .chuuijikou-container {
+                  display: column;
+                  justify-content: center; /* コンテンツを水平方向に中央に配置 */
+                  align-items: center; /* コンテンツを垂直方向に中央に配置 */
+                  width: 300px
+                  padding: 20px; /* 内部の余白を設定 */
+                }
+
+                .yougokaisetu-container {
+                  margin: 16px auto;
+                	text-align: center;
+                	display: block;
+                	border: 1px solid #000;
+                }
+
+                .left-text {
+                  text-align: left;
+                	display: inline-block;
+                }
+
+                #container {
+                  padding: 0 5px 0 5px;
+                }
+            </style>
+        </head>
+        <body>
+        <div class="container">
+          <div class="chuuijikou-container">
+            <br></br>
+            <p>※注意事項※</p>
+            <p><span class="highlight-text">精度よりもスピードを重視してください！</span></p>
+          </div>
+          <br></br>
+          <div class="yougokaisetu-container">
+            <p class="left-text">用語解説</br>
+                </br>
+                <span class="white-text">あ</span>☆「<span class="blue-text">添え字</span>」とはA₂の2のように、ある文字の右下についている小さい文字のことを指します。</br>
+                </br>
+                <span class="white-text">あ</span>☆「<span class="blue-text">許容</span>」とは該当のミスについては看過することを指します。</br>
+                </br>
+                <span class="white-text">あ</span>☆「<span class="blue-text">漢字ミス</span>」は以下の2通りのことを指します。</br>
+                <span class="white-text">ああ</span>・正しい漢字とは別の漢字を用いている場合(例：岡山を丘山と書いたら×)</br>
+                <span class="white-text">ああ</span>・画数が足りていなかったり多すぎたりした場合</br>
+                <span class="white-text">ああ</span>※とめ・はね・はらいのミスは許容してください。
+            </p>
+          </div>
+            <br></br>
+            <h1>用語の確認ができましたら、採点を開始してください！</h1>
+            <div class="keypad">
+              <button id="randomButton">採点を開始する</button>
+            </div>
+
+            <script>
+                // ボタンがクリックされたときの処理
+                document.getElementById('randomButton').addEventListener('click', function() {
+                    // ランダムなページのリスト
+                    const pages = [
+                        'ama_quizA1.html',
+                        'ama_quizA2.html',
+                        'ama_quizB1.html',
+                        'ama_quizB2.html'
+                    ];
+
+                    // ランダムなページを選択
+                    const randomPage = pages[Math.floor(Math.random() * pages.length)];
+
+                    // 選択されたランダムなページに遷移
+                    window.location.href = randomPage;
+                });
+            </script>
+        </div>
+        </body>
+        </html>
