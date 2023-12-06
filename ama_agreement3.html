@@ -38,18 +38,23 @@
                     margin-bottom: 20px;
                 }
 
-                .keypad {
+                .button-container {
                   display: flex;
                   justify-content: center;
-                  align-items: center;
-                  margin: 0;
+                  margin-top: 20px; /* 適切なマージンを追加 */
                 }
 
                 button {
-                    font-size: 20px;
-                    width: 200px;
-                    height: 80px;
+                  font-size: 20px;
+                  width: 200px;
+                  height: 80px;
+                  text-align: center;
+                }
+
+                #randomButton {
                     text-align: center;
+                    margin: 0 auto;
+                    display: block;
                 }
 
                 .zero {
@@ -121,7 +126,7 @@
           </div>
             <br></br>
             <h1>用語の確認ができましたら、採点を開始してください！</h1>
-            <div class="keypad">
+            <div class="button-container">
               <button id="randomButton">採点を開始する</button>
             </div>
 
