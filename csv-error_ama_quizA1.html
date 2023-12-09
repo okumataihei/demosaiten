@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>デジタル採点システムのインタフェース改善の事例</title>
+    <style>
+        /* スタイル付けたポップアップ */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* 背景色を黒色に設定 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: yellow;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .popup-text {
+            font-size: 24px;
+            color: black;
+            font-weight: bold;
+        }
+
+        #popup-confirm {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: skyblue;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        #next-button {
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+
+        #image-container {
+            text-align: center;
+            margin-top: 20px;
+            margin-right: 20px; /* Add margin to the right */
+        }
+
+        .image {
+            display: none;
+            max-width: 100%;
+            height: auto;
+        }
+
+        #quiz-container{
+            padding: 0 10px 0 10px;
+        }
+    </style>
+</head>
+<body>
+  <div id="completion-message" style="display: none;">
+      <p style="color: red; font-weight: bold;">csvがダウンロードできていることを確認しましたら下記フォームにアクセスしてください。</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSec4moBMYgzfb-FXDeyRrpjexKn6O5FJTYptAUgv6lj7kT_8g/viewform?pli=1">模範解答画像に関するアンケート</a>
+  </div>
+    <div id="quiz-container">
+        <div id="question-image-container" style="display: flex; align-items: center;">
+            <div id="question-container">
+                <div id="question-list"></div>
+            </div>
+            <div id="image-container" style="margin-left: 20px;">
+              <p id="transition-count">採点進捗: 1/20</p>
+              <img class="image" id="image5" src="amaphoto5.jpg" alt="Photo 5" style="max-width: 250px;">
+              <img class="image" id="image9" src="amaphoto9.jpg" alt="Photo 9" style="max-width: 250px;">
+              <img class="image" id="image1" src="amaphoto1.jpg" alt="Photo 1" style="max-width: 250px;">
+              <img class="image" id="image17" src="amaphoto17.jpg" alt="Photo 17" style="max-width: 250px;">
+              <img class="image" id="image13" src="amaphoto13.jpg" alt="Photo 13" style="max-width: 250px;">
+              <img class="image" id="image6" src="amaphoto6.jpg" alt="Photo 6" style="max-width: 250px;">
+              <img class="image" id="image10" src="amaphoto10.jpg" alt="Photo 10" style="max-width: 250px;">
+              <img class="image" id="image2" src="amaphoto2.jpg" alt="Photo 2" style="max-width: 250px;">
+              <img class="image" id="image18" src="amaphoto18.jpg" alt="Photo 18" style="max-width: 250px;">
+              <img class="image" id="image14" src="amaphoto14.jpg" alt="Photo 14" style="max-width: 250px;">
+              <img class="image" id="image7" src="amaphoto7.jpg" alt="Photo 7" style="max-width: 250px;">
+              <img class="image" id="image11" src="amaphoto11.jpg" alt="Photo 11" style="max-width: 250px;">
+              <img class="image" id="image3" src="amaphoto3.jpg" alt="Photo 3" style="max-width: 250px;">
+              <img class="image" id="image19" src="amaphoto19.jpg" alt="Photo 19" style="max-width: 250px;">
+              <img class="image" id="image15" src="amaphoto15.jpg" alt="Photo 15" style="max-width: 250px;">
+              <img class="image" id="image8" src="amaphoto8.jpg" alt="Photo 8" style="max-width: 250px;">
+              <img class="image" id="image12" src="amaphoto12.jpg" alt="Photo 12" style="max-width: 250px;">
+              <img class="image" id="image4" src="amaphoto4.jpg" alt="Photo 4" style="max-width: 250px;">
+              <img class="image" id="image20" src="amaphoto20.jpg" alt="Photo 20" style="max-width: 250px;">
+              <img class="image" id="image16" src="amaphoto16.jpg" alt="Photo 16" style="max-width: 250px;">
+            </div>
+      </div>
+      <button id="next-button">次の5問を表示</button>
+      <button id="download-button" style="display: none;">csvをダウンロード</button>
+  </div>
+
+<script>
+const groups = [
+  [
+    {"question": "5_1", "answer": "O"},
+    {"question": "5_2", "answer": "X"},
+    {"question": "5_3", "answer": "X"},
+    {"question": "5_4", "answer": "O"},
+    {"question": "5_5", "answer": "O"},
+  ],
+  [
+    {"question": "9_1", "answer": "O"},
+    {"question": "9_2", "answer": "X"},
+    {"question": "9_3", "answer": "X"},
+    {"question": "9_4", "answer": "O"},
+    {"question": "9_5", "answer": "1"},
+  ],
+  [
+    {"question": "1_1", "answer": "O"},
+    {"question": "1_2", "answer": "O"},
+    {"question": "1_3", "answer": "X"},
+    {"question": "1_4", "answer": "X"},
+    {"question": "1_5", "answer": "O"},
+  ],
+  [
+    {"question": "17_1", "answer": "O"},
+    {"question": "17_2", "answer": "O"},
+    {"question": "17_3", "answer": "O"},
+    {"question": "17_4", "answer": "1"},
+    {"question": "17_5", "answer": "X"},
+  ],
+  [
+    {"question": "13_1", "answer": "O"},
+    {"question": "13_2", "answer": "O"},
+    {"question": "13_3", "answer": "O"},
+    {"question": "13_4", "answer": "1"},
+    {"question": "13_5", "answer": "O"},
+  ],
+  [
+    {"question": "6_1", "answer": "O"},
+    {"question": "6_2", "answer": "O"},
+    {"question": "6_3", "answer": "O"},
+    {"question": "6_4", "answer": "X"},
+    {"question": "6_5", "answer": "1"},
+  ],
+  [
+    {"question": "10_1", "answer": "O"},
+    {"question": "10_2", "answer": "X"},
+    {"question": "10_3", "answer": "O"},
+    {"question": "10_4", "answer": "X"},
+    {"question": "10_5", "answer": "O"},
+  ],
+  [
+    {"question": "2_1", "answer": "O"},
+    {"question": "2_2", "answer": "O"},
+    {"question": "2_3", "answer": "X"},
+    {"question": "2_4", "answer": "O"},
+    {"question": "2_5", "answer": "X"},
+  ],
+  [
+    {"question": "18_1", "answer": "O"},
+    {"question": "18_2", "answer": "O"},
+    {"question": "18_3", "answer": "X"},
+    {"question": "18_4", "answer": "X"},
+    {"question": "18_5", "answer": "O"},
+  ],
+  [
+    {"question": "14_1", "answer": "O"},
+    {"question": "14_2", "answer": "O"},
+    {"question": "14_3", "answer": "X"},
+    {"question": "14_4", "answer": "X"},
+    {"question": "14_5", "answer": "O"},
+  ],
+  [
+    {"question": "7_1", "answer": "X"},
+    {"question": "7_2", "answer": "O"},
+    {"question": "7_3", "answer": "O"},
+    {"question": "7_4", "answer": "O"},
+    {"question": "7_5", "answer": "1"},
+  ],
+  [
+    {"question": "11_1", "answer": "X"},
+    {"question": "11_2", "answer": "X"},
+    {"question": "11_3", "answer": "O"},
+    {"question": "11_4", "answer": "O"},
+    {"question": "11_5", "answer": "O"},
+  ],
+  [
+    {"question": "3_1", "answer": "O"},
+    {"question": "3_2", "answer": "O"},
+    {"question": "3_3", "answer": "X"},
+    {"question": "3_4", "answer": "X"},
+    {"question": "3_5", "answer": "X"},
+  ],
+  [
+    {"question": "19_1", "answer": "O"},
+    {"question": "19_2", "answer": "O"},
+    {"question": "19_3", "answer": "O"},
+    {"question": "19_4", "answer": "O"},
+    {"question": "19_5", "answer": "X"},
+  ],
+  [
+    {"question": "15_1", "answer": "O"},
+    {"question": "15_2", "answer": "O"},
+    {"question": "15_3", "answer": "X"},
+    {"question": "15_4", "answer": "O"},
+    {"question": "15_5", "answer": "O"},
+  ],
+  [
+    {"question": "8_1", "answer": "O"},
+    {"question": "8_2", "answer": "X"},
+    {"question": "8_3", "answer": "O"},
+    {"question": "8_4", "answer": "O"},
+    {"question": "8_5", "answer": "X"},
+  ],
+  [
+    {"question": "12_1", "answer": "O"},
+    {"question": "12_2", "answer": "O"},
+    {"question": "12_3", "answer": "O"},
+    {"question": "12_4", "answer": "X"},
+    {"question": "12_5", "answer": "1"},
+  ],
+  [
+    {"question": "4_1", "answer": "O"},
+    {"question": "4_2", "answer": "O"},
+    {"question": "4_3", "answer": "X"},
+    {"question": "4_4", "answer": "O"},
+    {"question": "4_5", "answer": "X"},
+  ],
+  [
+    {"question": "20_1", "answer": "O"},
+    {"question": "20_2", "answer": "1"},
+    {"question": "20_3", "answer": "X"},
+    {"question": "20_4", "answer": "O"},
+    {"question": "20_5", "answer": "O"},
+  ],
+  [
+    {"question": "16_1", "answer": "X"},
+    {"question": "16_2", "answer": "X"},
+    {"question": "16_3", "answer": "O"},
+    {"question": "16_4", "answer": "O"},
+    {"question": "16_5", "answer": "1"},
+  ]
+];
+
+const groupWarnings = {
+  3 : " P_1のみ添え字ミスは許容 ",
+  8 : " M_1,V_1,V_0の添え字ミスは× ",
+  13 : " k_1,x_A,l_0の添え字ミスは× ",
+  18 : " C_Vのみ添え字ミスは許容 ",
+  1 : " .(ピリオド)がない場合は× ",
+  6 : " .(ピリオド)がない場合は1点 ",
+  11 : " .(ピリオド)がない場合は1点 ",
+  16 : " .(ピリオド)がない場合は× ",
+  2 : " 「思いのほか」は1点、漢字ミスは× ",
+  7 : " 赤字以外の言葉は×、漢字ミスも× ",
+  12 : " 赤字以外の言葉は×、漢字ミスも× ",
+  17 : " 「リミット」は1点、漢字ミスは× ",
+  5 : " -cosθは1点 ",
+  10 : " ＋,ー のミスは× ",
+  15 : " ＋,ー のミスは× ",
+  20 : " sinθは1点 ",
+  4 : " ひらかなカタカナを使ったら1点 ",
+  14 : " ひらかなカタカナは× ",
+  9 : " ひらかなカタカナは× ",
+  19 : " 「開放戦争」は1点 ",
+}
+
+
+// 画像ファイル名をグループに割り当てる
+const groupPhotoMapping = {
+  1: "amaphoto1.jpg",
+  2: "amaphoto2.jpg",
+  3: "amaphoto3.jpg",
+  4: "amaphoto4.jpg",
+  5: "amaphoto5.jpg",
+  6: "amaphoto6.jpg",
+  7: "amaphoto7.jpg",
+  8: "amaphoto8.jpg",
+  9: "amaphoto9.jpg",
+  10: "amaphoto10.jpg",
+  11: "amaphoto11.jpg",
+  12: "amaphoto12.jpg",
+  13: "amaphoto13.jpg",
+  14: "amaphoto14.jpg",
+  15: "amaphoto15.jpg",
+  16: "amaphoto16.jpg",
+  17: "amaphoto17.jpg",
+  18: "amaphoto18.jpg",
+  19: "amaphoto19.jpg",
+  20: "amaphoto20.jpg",
+};
+
+let currentGroupIndex = 0;
+let userAnswers = [];
+let transitionCount = 1;
+
+const nextButton = document.getElementById("next-button");
+const transitionCountElement = document.getElementById("transition-count");
+const questionList = document.getElementById("question-list");
+
+function showImage(groupIndex) {
+    const images = document.querySelectorAll(".image");
+    images.forEach((image, index) => {
+        if (index === groupIndex) {
+            image.style.display = "block";
+        } else {
+            image.style.display = "none";
+        }
+    });
+}
+
+function displayQuestions() {
+    transitionCountElement.textContent = `採点進捗: ${transitionCount}/20`;
+    questionList.innerHTML = "";
+    showImage(currentGroupIndex);
+
+    const group = groups[currentGroupIndex];
+
+    if (groupWarnings.hasOwnProperty(currentGroupIndex + 1)) {
+        displayWarningPopup(groupWarnings[currentGroupIndex + 1], () => {
+            displayGroupQuestions(group);
+        });
+    } else {
+        displayGroupQuestions(group);
+    }
+}
+
+function displayWarningPopup(message, callback) {
+    const warningPopup = document.createElement("div");
+    warningPopup.classList.add("popup");
+    warningPopup.innerHTML = `
+        <div class="popup-content">
+            <span class="popup-text">${message}</span>
+            <button id="popup-confirm">確認</button>
+        </div>
+    `;
+    document.body.appendChild(warningPopup);
+
+    const popupConfirmButton = document.getElementById("popup-confirm");
+    popupConfirmButton.addEventListener("click", () => {
+        document.body.removeChild(warningPopup);
+        callback();
+    });
+}
+
+function displayGroupQuestions(group) {
+    for (let i = 0; i < group.length; i++) {
+        const question = group[i];
+        const questionElement = document.createElement("div");
+        questionElement.textContent = question.question;
+
+        const answerInputO = createRadioButton("O", `answer${i}`); // 各問題ごとに異なるname属性を設定
+        const answerInputX = createRadioButton("X", `answer${i}`);
+        const answerInput1 = createRadioButton("1", `answer${i}`);
+
+        const questionContainer = document.createElement("div");
+        questionContainer.appendChild(questionElement);
+        questionContainer.appendChild(answerInputO);
+        questionContainer.appendChild(answerInputX);
+        questionContainer.appendChild(answerInput1);
+
+        questionList.appendChild(questionContainer);
+    }
+}
+
+
+function createRadioButton(value, name) {
+    const radioContainer = document.createElement("div");
+    radioContainer.style.display = "flex";
+
+    const radioButton = document.createElement("input");
+    radioButton.type = "radio";
+    radioButton.name = name;
+    radioButton.value = value;
+
+    const radioLabel = document.createElement("label");
+    radioLabel.textContent = value;
+    radioLabel.style.marginRight = "10px";
+
+    radioContainer.appendChild(radioButton);
+    radioContainer.appendChild(radioLabel);
+
+    return radioContainer;
+}
+
+nextButton.addEventListener("click", () => {
+    const selectedAnswers = document.querySelectorAll('input[type="radio"]:checked');
+
+    // Check if all questions are answered in the current group
+    if (selectedAnswers.length !== groups[currentGroupIndex].length) {
+        // Show a warning or handle the incomplete answer case
+        alert("全ての答案の採点をお願いします🙇");
+        return;
+    }
+
+    const groupAnswers = Array.from(selectedAnswers).map((radio) => radio.value);
+    userAnswers.push(groupAnswers);
+
+    currentGroupIndex++;
+
+    transitionCount++; // 画面遷移回数を更新
+
+    if (currentGroupIndex >= groups.length) {
+        nextButton.style.display = "none";
+        downloadButton.style.display = "block";
+    } else {
+        displayQuestions();
+    }
+});
+
+const downloadButton = document.getElementById("download-button");
+
+
+function downloadCSV() {
+    // CSV データを作成
+    let csvContent = "data:text/csv;charset=utf-8,";
+    const header = ["Question", "User Answer", "Result"]; // CSV ヘッダー
+
+    // 各グループの回答を CSV に追加
+    for (let i = 0; i < groups.length; i++) {
+        const group = groups[i];
+        const groupAnswers = userAnswers[i];
+        for (let j = 0; j < group.length; j++) {
+            const question = group[j].question;
+            const userAnswer = groupAnswers[j] || "-"; // 空欄の場合は "-" を使用
+            const correctAnswer = group[j].answer;
+            const result = userAnswer === correctAnswer ? "Correct" : "Incorrect";
+            const rowData = [question, userAnswer, result];
+            csvContent += rowData.join(",") + "\n"; // データ行をCSVに追加
+        }
+    }
+
+    // CSV ファイルをダウンロード
+    const encodedURI = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedURI);
+    link.setAttribute("download", "quiz_results.csv");
+    document.body.appendChild(link);
+    link.click();
+}
+
+function displayCompletionMessage() {
+  const completionMessage = document.getElementById("completion-message");
+  completionMessage.style.display = "block";
+}
+
+downloadButton.addEventListener("click", () => {
+    downloadCSV();
+    displayCompletionMessage(); // CSV ダウンロード後に完了メッセージを表示
+});
+
+// 最初の質問を表示
+displayQuestions();
+
+</script>
+</body>
+</html>
