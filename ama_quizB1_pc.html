@@ -3,106 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>デモ採点_9</title>
+    <title>デジタル採点システムのインタフェース改善の事例</title>
     <style>
-        /* スタイル付けたポップアップ */
-        input[type="radio"] {
-            width: 30px;
-            height: 30px;
-            margin-right: 5px;
-        }
+    input[type="radio"] {
+        width: 30px;
+        height: 30px;
+        margin-right: 0px; /* ここを修正 */
+        margin-bottom: 37px;
+    }
 
-        #next-button {
-            font-size: 18px;
-            padding: 10px 20px;
-        }
+    #next-button {
+        font-size: 18px;
+        padding: 10px 15px;
+        margin-right: 0; /* 500px から 0 に変更 */
+        margin-left: 298px; /* 追加 */
+    }
 
-        #image-container {
-            text-align: center;
-            margin-top: 20px;
-        }
+    #download-button {
+      font-size: 18px;
+      padding: 10px 15px;
+      margin-right: 0; /* 500px から 0 に変更 */
+      margin-left: 298px; /* 追加 */
+      border-color: red;
+    }
 
-        .image {
-            display: none;
-            max-width: 100%;
-            height: auto;
-        }
+    #image-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .image {
+        display: none;
+        max-width: 100%;
+        height: auto;
+    }
+
+    #question-container {
+        flex: 0.5; /* 100% 幅を使用 */
+    }
+
+    #question-list {
+        display: flex;
+        flex-direction: column; /* 縦に配置 */
+        align-items: flex-end;
+        margin-top: 180px;
+    }
+
+    .question-container {
+        margin-bottom: 200px; /* 質問コンテナの下部に余白を追加 */
+    }
     </style>
 </head>
 <body>
   <div id="completion-message" style="display: none;">
-    <p style="color: red; font-weight: bold;">csvがダウンロードできていることを確認しましたら下記フォームにアクセスしてください。</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd8JdDrgbL2jls1MVorS1xyhI7lj65kyGPnAN5JiF0uwKcTFA/viewform">模範解答画像に関するアンケート</a>
+      <p></p>
+      <p style="color: red; font-weight: bold; font-size: 30px">csvがダウンロードできていることを確認しましたら下記フォームに必ずアクセスしてください！</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSd6SyqxC4IbcbN3QSJ2MbyWmvhQsgB1DjfZss8xGXtGVe6gMA/viewform?pli=1">模範解答画像に関するアンケート</a>
   </div>
-    <div id="quiz-container">
-        <div id="question-image-container" style="display: flex; align-items: center;">
-            <div id="question-container">
-                <div id="question-list"></div>
-            </div>
-            <div id="image-container" style="margin-left: 20px;">
-              <img class="image" id="image5" src="amaphoto5.jpg" alt="Photo 5" style="max-width: 450px;">
-              <img class="image" id="image9" src="amaphoto9.jpg" alt="Photo 9" style="max-width: 450px;">
-              <img class="image" id="image1" src="amaphoto1.jpg" alt="Photo 1" style="max-width: 450px;">
-              <img class="image" id="image17" src="amaphoto17.jpg" alt="Photo 17" style="max-width: 450px;">
-              <img class="image" id="image13" src="amaphoto13.jpg" alt="Photo 13" style="max-width: 450px;">
-              <img class="image" id="image6" src="amaphoto6.jpg" alt="Photo 6" style="max-width: 450px;">
-              <img class="image" id="image10" src="amaphoto10.jpg" alt="Photo 10" style="max-width: 450px;">
-              <img class="image" id="image2" src="amaphoto2.jpg" alt="Photo 2" style="max-width: 450px;">
-              <img class="image" id="image18" src="amaphoto18.jpg" alt="Photo 18" style="max-width: 450px;">
-              <img class="image" id="image14" src="amaphoto14.jpg" alt="Photo 14" style="max-width: 450px;">
-              <img class="image" id="image7" src="amaphoto7.jpg" alt="Photo 7" style="max-width: 450px;">
-              <img class="image" id="image11" src="amaphoto11.jpg" alt="Photo 11" style="max-width: 450px;">
-              <img class="image" id="image3" src="amaphoto3.jpg" alt="Photo 3" style="max-width: 450px;">
-              <img class="image" id="image19" src="amaphoto19.jpg" alt="Photo 19" style="max-width: 450px;">
-              <img class="image" id="image15" src="amaphoto15.jpg" alt="Photo 15" style="max-width: 450px;">
-              <img class="image" id="image8" src="amaphoto8.jpg" alt="Photo 8" style="max-width: 450px;">
-              <img class="image" id="image12" src="amaphoto12.jpg" alt="Photo 12" style="max-width: 450px;">
-              <img class="image" id="image4" src="amaphoto4.jpg" alt="Photo 4" style="max-width: 450px;">
-              <img class="image" id="image20" src="amaphoto20.jpg" alt="Photo 20" style="max-width: 450px;">
-              <img class="image" id="image16" src="amaphoto16.jpg" alt="Photo 16" style="max-width: 450px;">
-            </div>
-      </div>
+    <div id="count-container" style="position: fixed; top: 20px; right: 20px; color: black; font-size: 18px;"></div>
+        <div id="quiz-container">
+            <div id="question-image-container" style="display: flex; align-items: center;">
+                <div id="question-container">
+                    <div id="question-list"></div>
+                </div>
+                <div id="image-container" style="margin-left: 20px;">
+                  <p id="transition-count">採点進捗: 1/20</p>
+                  <img class="image" id="image5" src="amaphoto5.jpg" alt="Photo 5" style="max-width: 450px;">
+                  <img class="image" id="image9" src="amaphoto9.jpg" alt="Photo 9" style="max-width: 450px;">
+                  <img class="image" id="image1" src="amaphoto1.jpg" alt="Photo 1" style="max-width: 450px;">
+                  <img class="image" id="image17" src="amaphoto17.jpg" alt="Photo 17" style="max-width: 450px;">
+                  <img class="image" id="image13" src="amaphoto13.jpg" alt="Photo 13" style="max-width: 450px;">
+                  <img class="image" id="image6" src="amaphoto6.jpg" alt="Photo 6" style="max-width: 450px;">
+                  <img class="image" id="image10" src="amaphoto10.jpg" alt="Photo 10" style="max-width: 450px;">
+                  <img class="image" id="image2" src="amaphoto2.jpg" alt="Photo 2" style="max-width: 450px;">
+                  <img class="image" id="image18" src="amaphoto18.jpg" alt="Photo 18" style="max-width: 450px;">
+                  <img class="image" id="image14" src="amaphoto14.jpg" alt="Photo 14" style="max-width: 450px;">
+                  <img class="image" id="image7" src="amaphoto7.jpg" alt="Photo 7" style="max-width: 450px;">
+                  <img class="image" id="image11" src="amaphoto11.jpg" alt="Photo 11" style="max-width: 450px;">
+                  <img class="image" id="image3" src="amaphoto3.jpg" alt="Photo 3" style="max-width: 450px;">
+                  <img class="image" id="image19" src="amaphoto19.jpg" alt="Photo 19" style="max-width: 450px;">
+                  <img class="image" id="image15" src="amaphoto15.jpg" alt="Photo 15" style="max-width: 450px;">
+                  <img class="image" id="image8" src="amaphoto8.jpg" alt="Photo 8" style="max-width: 450px;">
+                  <img class="image" id="image12" src="amaphoto12.jpg" alt="Photo 12" style="max-width: 450px;">
+                  <img class="image" id="image4" src="amaphoto4.jpg" alt="Photo 4" style="max-width: 450px;">
+                  <img class="image" id="image20" src="amaphoto20.jpg" alt="Photo 20" style="max-width: 450px;">
+                  <img class="image" id="image16" src="amaphoto16.jpg" alt="Photo 16" style="max-width: 450px;">
+                </div>
+          </div>
       <button id="next-button">次の5問を表示</button>
       <button id="download-button" style="display: none;">csvをダウンロード</button>
   </div>
 
 <script>
 const groups = [
-  [
-    {"question": "6_1", "answer": "O"},
-    {"question": "6_2", "answer": "O"},
-    {"question": "6_3", "answer": "O"},
-    {"question": "6_4", "answer": "X"},
-    {"question": "6_5", "answer": "1"},
-  ],
-  [
-    {"question": "10_1", "answer": "O"},
-    {"question": "10_2", "answer": "X"},
-    {"question": "10_3", "answer": "O"},
-    {"question": "10_4", "answer": "X"},
-    {"question": "10_5", "answer": "O"},
-  ],
-  [
-    {"question": "2_1", "answer": "O"},
-    {"question": "2_2", "answer": "O"},
-    {"question": "2_3", "answer": "X"},
-    {"question": "2_4", "answer": "O"},
-    {"question": "2_5", "answer": "X"},
-  ],
-  [
-    {"question": "18_1", "answer": "O"},
-    {"question": "18_2", "answer": "O"},
-    {"question": "18_3", "answer": "X"},
-    {"question": "18_4", "answer": "X"},
-    {"question": "18_5", "answer": "O"},
-  ],
-  [
-    {"question": "14_1", "answer": "O"},
-    {"question": "14_2", "answer": "O"},
-    {"question": "14_3", "answer": "X"},
-    {"question": "14_4", "answer": "X"},
-    {"question": "14_5", "answer": "O"},
-  ],
   [
     {"question": "5_1", "answer": "O"},
     {"question": "5_2", "answer": "X"},
@@ -137,6 +130,41 @@ const groups = [
     {"question": "13_3", "answer": "O"},
     {"question": "13_4", "answer": "1"},
     {"question": "13_5", "answer": "O"},
+  ],
+  [
+    {"question": "6_1", "answer": "O"},
+    {"question": "6_2", "answer": "O"},
+    {"question": "6_3", "answer": "O"},
+    {"question": "6_4", "answer": "X"},
+    {"question": "6_5", "answer": "1"},
+  ],
+  [
+    {"question": "10_1", "answer": "O"},
+    {"question": "10_2", "answer": "X"},
+    {"question": "10_3", "answer": "O"},
+    {"question": "10_4", "answer": "X"},
+    {"question": "10_5", "answer": "O"},
+  ],
+  [
+    {"question": "2_1", "answer": "O"},
+    {"question": "2_2", "answer": "O"},
+    {"question": "2_3", "answer": "X"},
+    {"question": "2_4", "answer": "O"},
+    {"question": "2_5", "answer": "X"},
+  ],
+  [
+    {"question": "18_1", "answer": "O"},
+    {"question": "18_2", "answer": "O"},
+    {"question": "18_3", "answer": "X"},
+    {"question": "18_4", "answer": "X"},
+    {"question": "18_5", "answer": "O"},
+  ],
+  [
+    {"question": "14_1", "answer": "O"},
+    {"question": "14_2", "answer": "O"},
+    {"question": "14_3", "answer": "X"},
+    {"question": "14_4", "answer": "X"},
+    {"question": "14_5", "answer": "O"},
   ],
   [
     {"question": "7_1", "answer": "X"},
@@ -210,36 +238,61 @@ const groups = [
   ]
 ];
 
+const groupWarnings = {
+  3 : " P_1のみ添え字ミスは許容 ",
+  8 : " M_1,V_1,V_0の添え字ミスは× ",
+  13 : " k_1,x_A,l_0の添え字ミスは× ",
+  18 : " C_Vのみ添え字ミスは許容 ",
+  1 : " .(ピリオド)がない場合は× ",
+  6 : " .(ピリオド)がない場合は1点 ",
+  11 : " .(ピリオド)がない場合は1点 ",
+  16 : " .(ピリオド)がない場合は× ",
+  2 : " 「思いのほか」は1点、漢字ミスは× ",
+  7 : " 赤字以外の言葉は×、漢字ミスも× ",
+  12 : " 赤字以外の言葉は×、漢字ミスも× ",
+  17 : " 「リミット」は1点、漢字ミスは× ",
+  5 : " -cosθは1点 ",
+  10 : " ＋,ー のミスは× ",
+  15 : " ＋,ー のミスは× ",
+  20 : " sinθは1点 ",
+  4 : " ひらかなカタカナを使ったら1点 ",
+  14 : " ひらかなカタカナは× ",
+  9 : " ひらかなカタカナは× ",
+  19 : " 「開放戦争」は1点 ",
+}
+
 
 // 画像ファイル名をグループに割り当てる
 const groupPhotoMapping = {
-  1: "photo1.jpg",
-  2: "photo2.jpg",
-  3: "photo3.jpg",
-  4: "photo4.jpg",
-  5: "photo5.jpg",
-  6: "photo6.jpg",
-  7: "photo7.jpg",
-  8: "photo8.jpg",
-  9: "photo9.jpg",
-  10: "photo10.jpg",
-  11: "photo11.jpg",
-  12: "photo12.jpg",
-  13: "photo13.jpg",
-  14: "photo14.jpg",
-  15: "photo15.jpg",
-  16: "photo16.jpg",
-  17: "photo17.jpg",
-  18: "photo18.jpg",
-  19: "photo19.jpg",
-  20: "photo20.jpg",
+  1: "amaphoto1.jpg",
+  2: "amaphoto2.jpg",
+  3: "amaphoto3.jpg",
+  4: "amaphoto4.jpg",
+  5: "amaphoto5.jpg",
+  6: "amaphoto6.jpg",
+  7: "amaphoto7.jpg",
+  8: "amaphoto8.jpg",
+  9: "amaphoto9.jpg",
+  10: "amaphoto10.jpg",
+  11: "amaphoto11.jpg",
+  12: "amaphoto12.jpg",
+  13: "amaphoto13.jpg",
+  14: "amaphoto14.jpg",
+  15: "amaphoto15.jpg",
+  16: "amaphoto16.jpg",
+  17: "amaphoto17.jpg",
+  18: "amaphoto18.jpg",
+  19: "amaphoto19.jpg",
+  20: "amaphoto20.jpg",
 };
 
 let currentGroupIndex = 0;
 let userAnswers = [];
+let transitionCount = 1;
 
-const questionList = document.getElementById("question-list");
 const nextButton = document.getElementById("next-button");
+const transitionCountElement = document.getElementById("transition-count");
+const questionList = document.getElementById("question-list");
 
 function showImage(groupIndex) {
     const images = document.querySelectorAll(".image");
@@ -253,6 +306,7 @@ function showImage(groupIndex) {
 }
 
 function displayQuestions() {
+    transitionCountElement.textContent = `採点進捗: ${transitionCount}/20`;
     questionList.innerHTML = "";
     showImage(currentGroupIndex);
     const group = groups[currentGroupIndex];
@@ -285,7 +339,9 @@ function displayGroupQuestions(group) {
 
 function createRadioButton(value, name) {
     const radioContainer = document.createElement("div");
-    radioContainer.style.display = "flex";
+    radioContainer.style.display = "inline-flex"; /* 横に配置 */
+    radioContainer.style.flexDirection = "row"; /* 修正 */
+    radioContainer.style.alignItems = "center"; /* ボタンを中央に配置 */
 
     const radioButton = document.createElement("input");
     radioButton.type = "radio";
@@ -294,7 +350,6 @@ function createRadioButton(value, name) {
 
     const radioLabel = document.createElement("label");
     radioLabel.textContent = value;
-    radioLabel.style.marginRight = "10px";
 
     radioContainer.appendChild(radioButton);
     radioContainer.appendChild(radioLabel);
@@ -305,17 +360,25 @@ function createRadioButton(value, name) {
 nextButton.addEventListener("click", () => {
     const selectedAnswers = document.querySelectorAll('input[type="radio"]:checked');
 
+    // Check if all questions are answered in the current group
+    if (selectedAnswers.length !== groups[currentGroupIndex].length) {
+        // Show a warning or handle the incomplete answer case
+        alert("全ての答案の採点をお願いします🙇");
+        return;
+    }
+
     const groupAnswers = Array.from(selectedAnswers).map((radio) => radio.value);
     userAnswers.push(groupAnswers);
 
     currentGroupIndex++;
 
-    if (currentGroupIndex < groups.length) {
-        displayQuestions(); // Display the next set of questions
-    } else {
-        // Hide the "Next" button and show the "Download" button when all groups are done
+    transitionCount++; // 画面遷移回数を更新
+
+    if (currentGroupIndex >= groups.length) {
         nextButton.style.display = "none";
         downloadButton.style.display = "block";
+    } else {
+        displayQuestions();
     }
 });
 
@@ -361,8 +424,14 @@ downloadButton.addEventListener("click", () => {
     displayCompletionMessage(); // CSV ダウンロード後に完了メッセージを表示
 });
 
+downloadButton.addEventListener("click", () => {
+    downloadCSV();
+    displayCompletionMessage(); // CSV ダウンロード後に完了メッセージを表示
+});
+
 // 最初の質問を表示
 displayQuestions();
+
 </script>
 </body>
 </html>

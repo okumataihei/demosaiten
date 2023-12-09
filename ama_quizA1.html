@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>デモ採点_1</title>
+    <title>デジタル採点システムのインタフェース改善の事例</title>
     <style>
         /* スタイル付けたポップアップ */
         .popup {
@@ -61,12 +61,16 @@
             max-width: 100%;
             height: auto;
         }
+
+        #quiz-container{
+            padding: 0 5px 0 5px;
+        }
     </style>
 </head>
 <body>
   <div id="completion-message" style="display: none;">
       <p style="color: red; font-weight: bold;">csvがダウンロードできていることを確認しましたら下記フォームにアクセスしてください。</p>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScp_B44NNAaxln8MXn1edW5NwMznCZqvvsNViGu3DiGc7xi3w/viewform">模範解答画像に関するアンケート</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSec4moBMYgzfb-FXDeyRrpjexKn6O5FJTYptAUgv6lj7kT_8g/viewform?pli=1">模範解答画像に関するアンケート</a>
   </div>
     <div id="quiz-container">
         <div id="question-image-container" style="display: flex; align-items: center;">
@@ -74,6 +78,7 @@
                 <div id="question-list"></div>
             </div>
             <div id="image-container" style="margin-left: 20px;">
+              <p id="transition-count">採点進捗: 1/20</p>
               <img class="image" id="image5" src="amaphoto5.jpg" alt="Photo 5" style="max-width: 250px;">
               <img class="image" id="image9" src="amaphoto9.jpg" alt="Photo 9" style="max-width: 250px;">
               <img class="image" id="image1" src="amaphoto1.jpg" alt="Photo 1" style="max-width: 250px;">
@@ -245,7 +250,7 @@ const groups = [
 ];
 
 const groupWarnings = {
-  3 : " P_Aのみ添え字ミスは許容 ",
+  3 : " P_1のみ添え字ミスは許容 ",
   8 : " M_1,V_1,V_0の添え字ミスは× ",
   13 : " k_1,x_A,l_0の添え字ミスは× ",
   18 : " C_Vのみ添え字ミスは許容 ",
@@ -270,33 +275,35 @@ const groupWarnings = {
 
 // 画像ファイル名をグループに割り当てる
 const groupPhotoMapping = {
-  1: "photo1.jpg",
-  2: "photo2.jpg",
-  3: "photo3.jpg",
-  4: "photo4.jpg",
-  5: "photo5.jpg",
-  6: "photo6.jpg",
-  7: "photo7.jpg",
-  8: "photo8.jpg",
-  9: "photo9.jpg",
-  10: "photo10.jpg",
-  11: "photo11.jpg",
-  12: "photo12.jpg",
-  13: "photo13.jpg",
-  14: "photo14.jpg",
-  15: "photo15.jpg",
-  16: "photo16.jpg",
-  17: "photo17.jpg",
-  18: "photo18.jpg",
-  19: "photo19.jpg",
-  20: "photo20.jpg",
+  1: "amaphoto1.jpg",
+  2: "amaphoto2.jpg",
+  3: "amaphoto3.jpg",
+  4: "amaphoto4.jpg",
+  5: "amaphoto5.jpg",
+  6: "amaphoto6.jpg",
+  7: "amaphoto7.jpg",
+  8: "amaphoto8.jpg",
+  9: "amaphoto9.jpg",
+  10: "amaphoto10.jpg",
+  11: "amaphoto11.jpg",
+  12: "amaphoto12.jpg",
+  13: "amaphoto13.jpg",
+  14: "amaphoto14.jpg",
+  15: "amaphoto15.jpg",
+  16: "amaphoto16.jpg",
+  17: "amaphoto17.jpg",
+  18: "amaphoto18.jpg",
+  19: "amaphoto19.jpg",
+  20: "amaphoto20.jpg",
 };
 
 let currentGroupIndex = 0;
 let userAnswers = [];
+let transitionCount = 1;
 
-const questionList = document.getElementById("question-list");
 const nextButton = document.getElementById("next-button");
+const transitionCountElement = document.getElementById("transition-count");
+const questionList = document.getElementById("question-list");
 
 function showImage(groupIndex) {
     const images = document.querySelectorAll(".image");
@@ -310,6 +317,7 @@ function showImage(groupIndex) {
 }
 
 function displayQuestions() {
+    transitionCountElement.textContent = `採点進捗: ${transitionCount}/20`;
     questionList.innerHTML = "";
     showImage(currentGroupIndex);
 
@@ -385,10 +393,19 @@ function createRadioButton(value, name) {
 nextButton.addEventListener("click", () => {
     const selectedAnswers = document.querySelectorAll('input[type="radio"]:checked');
 
+    // Check if all questions are answered in the current group
+    if (selectedAnswers.length !== groups[currentGroupIndex].length) {
+        // Show a warning or handle the incomplete answer case
+        alert("全ての答案の採点をお願いします🙇");
+        return;
+    }
+
     const groupAnswers = Array.from(selectedAnswers).map((radio) => radio.value);
     userAnswers.push(groupAnswers);
 
     currentGroupIndex++;
+
+    transitionCount++; // 画面遷移回数を更新
 
     if (currentGroupIndex >= groups.length) {
         nextButton.style.display = "none";
@@ -441,6 +458,7 @@ downloadButton.addEventListener("click", () => {
 
 // 最初の質問を表示
 displayQuestions();
+
 </script>
 </body>
 </html>
