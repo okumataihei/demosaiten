@@ -1,109 +1,196 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>デモ採点</title>
+    <title>デジタル採点システムのインタフェース改善の事例</title>
     <style>
-        /* 大きなコンテナのスタイル */
-        .quiz-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* クイズと回答を分けるコンテナ */
+    .quiz-answer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-        /* 質問のコンテナのスタイル */
-        .question-container {
-            flex: 1;
-            max-width: 350px; /* 左のコンテナの横幅を調整 */
-        }
+    /* クイズコンテナ */
+    .quiz-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
 
-        /* 写真のスタイル */
-        .photo-container {
-            flex: 1;
-            text-align: center;
-        }
+    /* 質問コンテナ */
+    .question-container {
+        flex: 1;
+        max-width: 350px;
+    }
 
-        .question-image {
-            width: 500px; /* 写真の幅を調整 */
-        }
+    /* 写真コンテナ */
+    .photo-container {
+        flex: 1;
+        text-align: center;
+    }
 
-        input[type="radio"] {
-            width: 30px;
-            height: 30px;
-            margin-right: 5px;
-        }
+    .question-image {
+        width: 100%;
+    }
+
+    input[type="radio"] {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
+
+    .result-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .result-content-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      margin-left: 2px;
+      margin-right: 2px;
+    }
+
+    /* 説明コンテナ */
+    .explanation-container {
+        flex: 1;
+        max-width: 350px;
+        margin-left: 150px;
+    }
+
+    /* 回答写真コンテナ */
+    .answerphoto-container {
+        flex: 1;
+        text-align: center;
+    }
+
+    .answer-image{
+      width: 100%;
+    }
+
+    /* ボタンのスタイル */
+    button {
+        align-items: center;
+        font-size: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .question-image {
+        width: 50%; /* Adjust the percentage or use a specific value */
+        max-width: 100%; /* Ensure images don't exceed their original size */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    /* 正解の写真（初めは非表示） */
+    #correctImage {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    #scrollMessage {
+        font-size: 20px;
+        color: green; /* Adjust color as needed */
+    }
     </style>
 </head>
 <body>
     <h1>操作確認</h1>
 
     <!-- 大きなコンテナ -->
-    <div class="quiz-container">
-        <!-- 質問のコンテナ -->
-        <div class="question-container">
-            <div>
-                <p>右側の写真の一番上が模範解答、その下の5つが生徒の答案です。生徒の答案は上から順に採点してください。</p>
-                <p>O, X, 1はそれぞれ正解、不正解、1点を表しています。</p>
+    <div class="container">
+        <!-- クイズコンテナ -->
+        <div class="quiz-answer-container">
+            <div class="quiz-container">
+                <!-- 質問コンテナ -->
+                <div class="question-container">
+                    <div>
+                        <p>右側の写真の一番上が模範解答、その下の5つが生徒の答案です。生徒の答案は上から順に採点してください。</p>
+                        <p>O, X, 1はそれぞれ正解、不正解、1点を表しています。</p>
+                    </div>
+
+                    <!-- 質問 No.1 -->
+                    <div>
+                        <p>1.</p>
+                        <input type="radio" name="question1" value="O"> O
+                        <input type="radio" name="question1" value="X"> X
+                        <input type="radio" name="question1" value="X"> 1
+                    </div>
+
+                    <!-- 質問 No.2 -->
+                    <div>
+                        <p>2. </p>
+                        <input type="radio" name="question2" value="O"> O
+                        <input type="radio" name="question2" value="X"> X
+                        <input type="radio" name="question1" value="X"> 1
+                    </div>
+
+                    <!-- 質問 No.3 -->
+                    <div>
+                        <p>3.</p>
+                        <input type="radio" name="question3" value="O"> O
+                        <input type="radio" name="question3" value="X"> X
+                        <input type="radio" name="question1" value="X"> 1
+                    </div>
+
+                    <!-- 質問 No.4 -->
+                    <div>
+                        <p>4.</p>
+                        <input type="radio" name="question4" value="O"> O
+                        <input type="radio" name="question4" value="X"> X
+                        <input type="radio" name="question1" value="X"> 1
+                    </div>
+
+                    <!-- 質問 No.5 -->
+                    <div>
+                        <p>5.</p>
+                        <input type="radio" name="question5" value="O"> O
+                        <input type="radio" name="question5" value="X"> X
+                        <input type="radio" name="question1" value="X"> 1
+                    </div>
+                </div>
+
+                <!-- 写真コンテナ -->
+                <div class="photo-container">
+                    <!-- 質問の写真 -->
+                    <img src="質問の写真.jpg" alt="質問の写真" class="question-image">
+                </div>
             </div>
 
-            <!-- 質問 No.1 -->
-            <div>
-                <p>1.</p>
-                <input type="radio" name="question1" value="O"> O
-                <input type="radio" name="question1" value="X"> X
-                <input type="radio" name="question1" value="X"> 1
-            </div>
-
-            <!-- 質問 No.2 -->
-            <div>
-                <p>2. </p>
-                <input type="radio" name="question2" value="O"> O
-                <input type="radio" name="question2" value="X"> X
-                <input type="radio" name="question1" value="X"> 1
-            </div>
-
-            <!-- 質問 No.3 -->
-            <div>
-                <p>3.</p>
-                <input type="radio" name="question3" value="O"> O
-                <input type="radio" name="question3" value="X"> X
-                <input type="radio" name="question1" value="X"> 1
-            </div>
-
-            <!-- 質問 No.4 -->
-            <div>
-                <p>4.</p>
-                <input type="radio" name="question4" value="O"> O
-                <input type="radio" name="question4" value="X"> X
-                <input type="radio" name="question1" value="X"> 1
-            </div>
-
-            <!-- 質問 No.5 -->
-            <div>
-                <p>5.</p>
-                <input type="radio" name="question5" value="O"> O
-                <input type="radio" name="question5" value="X"> X
-                <input type="radio" name="question1" value="X"> 1
-            </div>
+            <!-- 確認ボタン -->
+            <div id="scrollMessage" style="display: none;">下にスクロール</div>
+            <button onclick="showCorrectImage()">確認</button>
         </div>
 
-        <!-- 写真のコンテナ -->
-        <div class="photo-container">
-            <!-- 質問の写真 -->
-            <img src="質問の写真.jpg" alt="質問の写真" class="question-image">
+        <!-- 正解の写真（初めは非表示） -->
+        <div id="correctImage" style="display: none;">
+          <div class="result-container">
+            <div class="result-content-container">
+              <!-- 説明コンテナ -->
+              <div class="explanation-container">
+                  <p>実際の採点では、このような正しい採点結果の写真は表示されず、次の問題が表示される仕組みになっています。</p>
+                  <p>最後の問題を解き終わったら、「csvをダウンロード」のボタンを押していただきます。操作の確認ができましたら下のボタンを押してください。</p>
+              </div>
+              <!-- 回答写真コンテナ -->
+              <div class="answerphoto-container">
+                  <!-- 回答の写真 -->
+                  <img src="正解の写真.jpg" alt="正解の写真" class="question-image">
+              </div>
+            </div>
+            <!-- 操作の確認ができたボタン -->
+            <button onclick="navigateToAgreement3()">操作の確認ができた</button>
+          </div>
         </div>
-    </div>
-
-    <!-- 確認ボタン -->
-    <button onclick="showCorrectImage()">確認</button>
-
-    <!-- 正解の写真（初めは非表示） -->
-    <div id="correctImage" style="display: none;">
-        <!-- 正解の写真 -->
-        <img src="正解の写真.jpg" alt="正解の写真" class="question-image">
-        <br>
-        <p>実際の採点では、このような正しい採点結果の写真は表示されず、次の問題が表示される仕組みになっています。</p>
-        <p>最後の問題を解き終わったら、「csvをダウンロード」のボタンを押していただきます。操作の確認ができましたら下のボタンを押してください。</p>
-        <button onclick="navigateToAgreement3()">操作の確認ができた</button>
     </div>
 
     <!-- JavaScript -->
@@ -115,8 +202,17 @@
 
         function navigateToAgreement3() {
             // agreement3.htmlに遷移
-            window.location.href = "ama_agreement3.html";
+            window.location.href = "ama_agreement3_pc.html";
         }
+
+        function showCorrectImage() {
+            // 模範解答の写真を表示
+            document.getElementById("correctImage").style.display = "block";
+
+            // Show the scroll message to the right of the button
+            document.getElementById("scrollMessage").style.display = "inline-block";
+        }
+
     </script>
 </body>
 </html>
