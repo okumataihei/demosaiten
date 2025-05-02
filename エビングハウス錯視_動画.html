@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ebbinghaus Illusion Simulation</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      position: relative;
+      width: 800px;
+      height: 400px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .group {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+
+    .inducer {
+      position: absolute;
+      background-color: gray;
+      border-radius: 50%;
+      transition: all 0.05s linear;
+    }
+
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background-color: black;
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    .fixation {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      color: black;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="group" id="leftGroup">
+      <div class="inducer" data-pos="top"></div>
+      <div class="inducer" data-pos="bottom"></div>
+      <div class="inducer" data-pos="left"></div>
+      <div class="inducer" data-pos="right"></div>
+      <div class="center"></div>
+    </div>
+    <div class="group" id="rightGroup">
+      <div class="inducer" data-pos="top"></div>
+      <div class="inducer" data-pos="bottom"></div>
+      <div class="inducer" data-pos="left"></div>
+      <div class="inducer" data-pos="right"></div>
+      <div class="center"></div>
+    </div>
+  </div>
+  <!-- Fixation point in center of screen -->
+  <div class="fixation">+</div>
+
+  <script>
+    const frames = 20;
+    const interval = 50;
+    const leftInducers = document.querySelectorAll('#leftGroup .inducer');
+    const rightInducers = document.querySelectorAll('#rightGroup .inducer');
+    const leftCenter = document.querySelector('#leftGroup .center');
+    const rightCenter = document.querySelector('#rightGroup .center');
+
+    const setInducerStyle = (el, size, group) => {
+      const pos = el.getAttribute('data-pos');
+      let offset = 75;
+
+      if (group === 'left' || group === 'right') {
+        if (pos === 'top') {
+          el.style.width = `${size}px`;
+          el.style.height = `${size}px`;
+          el.style.left = '50%';
+          el.style.top = `${150 - offset - size}px`;
+          el.style.transform = 'translateX(-50%)';
+        } else if (pos === 'bottom') {
+          el.style.width = `${size}px`;
+          el.style.height = `${size}px`;
+          el.style.left = '50%';
+          el.style.top = `${150 + offset}px`;
+          el.style.transform = 'translateX(-50%)';
+        } else if (pos === 'left') {
+          el.style.width = `${size}px`;
+          el.style.height = `${size}px`;
+          el.style.top = '50%';
+          el.style.left = `${150 - offset - size}px`;
+          el.style.transform = 'translateY(-50%)';
+        } else if (pos === 'right') {
+          el.style.width = `${size}px`;
+          el.style.height = `${size}px`;
+          el.style.top = '50%';
+          el.style.left = `${150 + offset}px`;
+          el.style.transform = 'translateY(-50%)';
+        }
+      }
+    };
+
+    let frame = 0;
+
+    function animate() {
+      if (frame <= frames) {
+        const leftSize = 100 - (frame * (100 - 35) / frames);
+        const rightSize = 35 + (frame * (100 - 35) / frames);
+
+        leftInducers.forEach(el => setInducerStyle(el, leftSize, 'left'));
+        rightInducers.forEach(el => setInducerStyle(el, rightSize, 'right'));
+
+        if (frame === 10) {
+          leftCenter.style.opacity = 1;
+          rightCenter.style.opacity = 1;
+          setTimeout(() => {
+            leftCenter.style.opacity = 0;
+            rightCenter.style.opacity = 0;
+          }, 50);
+        }
+
+        frame++;
+        setTimeout(animate, interval);
+      }
+    }
+
+    animate();
+  </script>
+</body>
+</html>
