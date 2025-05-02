@@ -89,7 +89,7 @@
 
     const setInducerStyle = (el, size, group) => {
       const pos = el.getAttribute('data-pos');
-      let offset = 75;
+      let offset = 60;
 
       if (group === 'left' || group === 'right') {
         if (pos === 'top') {
@@ -124,8 +124,8 @@
 
     function animate() {
       if (frame <= frames) {
-        const leftSize = 100 - (frame * (100 - 35) / frames);
-        const rightSize = 35 + (frame * (100 - 35) / frames);
+        const leftSize = 150 - (frame * (150 - 50) / frames);
+        const rightSize = 50 + (frame * (150 - 50) / frames);
 
         leftInducers.forEach(el => setInducerStyle(el, leftSize, 'left'));
         rightInducers.forEach(el => setInducerStyle(el, rightSize, 'right'));
