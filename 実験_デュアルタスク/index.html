@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>認知タスクA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div id="game-wrapper">
+            <h1>認知タスクA</h1>
+            <p id="instruction">下の「挑戦する」ボタンを押してください</p>
+            <div id="game-container">
+                <div id="field">
+                    <div class="player attacker" id="fw"></div>
+                    <div class="player defender" id="df"></div>
+                    <div id="ball"></div>
+                </div>
+                <div id="controls">
+                    <div id="judgement-buttons">
+                        <button id="red-left-btn">
+                            <span class="icon-triangle icon-red"></span><span class="icon-triangle icon-blue"></span>
+                        </button>
+                        <button id="red-right-btn">
+                            <span class="icon-triangle icon-blue"></span><span class="icon-triangle icon-red"></span>
+                        </button>
+                    </div>
+                    <button id="retry-btn">挑戦する</button>
+                    <button id="download-btn">結果をダウンロード (CSV)</button>
+                </div>
+            </div>
+        </div>
+        <div id="results-container">
+            <h2>試行結果</h2>
+            <table id="results-table">
+                <thead>
+                    <tr>
+                        <th>試行</th>
+                        <th>tの値</th>
+                        <th>前面</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <audio id="audio-cue" src="audio/beep.mp3" preload="auto"></audio>
+    <script src="script.js"></script>
+</body>
+</html>

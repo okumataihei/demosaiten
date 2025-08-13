@@ -1,0 +1,172 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+}
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+}
+#game-wrapper {
+    text-align: center;
+}
+#instruction {
+    height: 2.5em;
+    line-height: 1.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#game-container {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: white;
+}
+#field {
+    width: 800px;
+    height: 450px;
+    background-color: #dddddd;
+    border: 2px solid #aaaaaa;
+    position: relative;
+    overflow: hidden;
+}
+.player {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 17.5px solid transparent;
+    border-right: 17.5px solid transparent;
+    border-bottom-width: 85px;
+    border-bottom-style: solid;
+}
+.attacker { border-bottom-color: #e74c3c; }
+.defender { border-bottom-color: #3498db; }
+
+/* ★★★ ボールのスタイル修正 ★★★ */
+#ball {
+    position: absolute;
+    background-color: black;
+    border-radius: 50%;
+    z-index: 100;
+    opacity: 0; /* 初期状態は非表示 */
+    transition: opacity 0.05s ease-in-out; /* なめらかな点滅のため */
+}
+.task-b #df {
+    opacity: 0;
+}
+#controls {
+    text-align: center;
+    margin-top: 15px;
+    height: 50px;
+    position: relative;
+}
+#judgement-buttons,
+#retry-btn,
+#download-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#judgement-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#judgement-buttons button {
+    padding: 8px 12px;
+    cursor: pointer;
+    margin: 0 10px;
+    line-height: 1;
+    height: 35px;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    border-radius: 5px;
+    min-width: 80px;
+    font-size: 16px;
+}
+#judgement-buttons button:hover {
+    border-color: #888;
+}
+.icon-triangle {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    margin: 0 2px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom-width: 17px;
+    border-bottom-style: solid;
+}
+.icon-red { border-bottom-color: #e74c3c; }
+.icon-blue { border-bottom-color: #3498db; }
+#retry-btn, #download-btn {
+    padding: 12px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+#retry-btn { background-color: #27ae60; }
+#download-btn { background-color: #3498db; }
+#results-container {
+    width: 300px;
+    margin-top: 50px;
+    background-color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+#results-container h2 {
+    margin: 0 0 15px 0;
+    text-align: left;
+    color: #333;
+    font-size: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+#results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+#results-table th, #results-table td {
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 14px 8px;
+    text-align: center;
+}
+#results-table tr:last-child td {
+    border-bottom: none;
+}
+#results-table th {
+    color: #888;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 11px;
+    padding-top: 0;
+}
+#results-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+.playing #fw {
+    animation-name: move-fw;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+@keyframes move-fw {
+    from { left: 32.5px; }
+    to   { left: 682.5px; }
+}
+
+/* ボールのアニメーションは不要になったので削除 */
